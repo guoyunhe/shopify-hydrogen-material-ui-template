@@ -41,12 +41,12 @@ dependencies:
   isbot:
     specifier: ^3.6.6
     version: 3.7.0
-  mui-icons-bootstrap:
-    specifier: ^1.10.2
-    version: 1.10.2(@mui/material@5.14.16)
   react:
     specifier: ^18.2.0
     version: 18.2.0
+  react-bootstrap-icons:
+    specifier: ^1.10.3
+    version: 1.10.3(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
@@ -2266,42 +2266,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@mui/material@5.14.16(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-W4zZ4vnxgGk6/HqBwgsDHKU7x2l2NhX+r8gAwfg58Rhu3ikfY7NkIS6y8Gl3NkATc4GG1FNaGjjpQKfJx3U6Jw==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      '@emotion/react': ^11.5.0
-      '@emotion/styled': ^11.3.0
-      '@types/react': ^17.0.0 || ^18.0.0
-      react: ^17.0.0 || ^18.0.0
-      react-dom: ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@emotion/react':
-        optional: true
-      '@emotion/styled':
-        optional: true
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.23.2
-      '@emotion/react': 11.11.1(@types/react@18.2.34)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.34)(react@18.2.0)
-      '@mui/base': 5.0.0-beta.22(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)
-      '@mui/core-downloads-tracker': 5.14.16
-      '@mui/system': 5.14.16(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react@18.2.0)
-      '@mui/types': 7.2.8(@types/react@18.2.34)
-      '@mui/utils': 5.14.16(@types/react@18.2.34)(react@18.2.0)
-      '@types/react': 18.2.34
-      '@types/react-transition-group': 4.4.8
-      clsx: 2.0.0
-      csstype: 3.1.2
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-is: 18.2.0
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-    dev: false
-
   /@mui/private-theming@5.14.16(@types/react@18.2.34)(react@18.2.0):
     resolution: {integrity: sha512-FNlL0pTSEBh8nXsVWreCHDSHk+jG8cBx1sxRbT8JVtL+PYbYPi802zfV4B00Kkf0LNRVRvAVQwojMWSR/MYGng==}
     engines: {node: '>=12.0.0'}
@@ -3623,12 +3587,6 @@ packages:
     dependencies:
       '@types/react': 18.2.34
     dev: true
-
-  /@types/react-transition-group@4.4.8:
-    resolution: {integrity: sha512-QmQ22q+Pb+HQSn04NL3HtrqHwYMf4h3QKArOy5F8U5nEVMaihBs3SR10WiOM1iwPz5jIo8x/u11al+iEGZZrvg==}
-    dependencies:
-      '@types/react': 18.2.34
-    dev: false
 
   /@types/react@18.2.34:
     resolution: {integrity: sha512-U6eW/alrRk37FU/MS2RYMjx0Va2JGIVXELTODaTIYgvWGCV4Y4TfTUzG8DdmpDNIT0Xpj/R7GfyHOJJrDttcvg==}
@@ -5273,13 +5231,6 @@ packages:
   /dom-accessibility-api@0.5.16:
     resolution: {integrity: sha512-X7BJ2yElsnOJ30pZF4uIIDfBEVgF4XEBxL9Bxhy6dnrm5hkzqmsWHGTiHqRiITNhMyFLyAiWndIJP7Z1NTteDg==}
     dev: true
-
-  /dom-helpers@5.2.1:
-    resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
-    dependencies:
-      '@babel/runtime': 7.23.2
-      csstype: 3.1.2
-    dev: false
 
   /dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
@@ -8522,14 +8473,6 @@ packages:
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /mui-icons-bootstrap@1.10.2(@mui/material@5.14.16):
-    resolution: {integrity: sha512-UAa1BEENWJtRJgkbHD9ZT/Txe1fhWIGjDyrpRzuK33xmISfv+uH6CwktepsBVpdsnoaoeKaDqyjTw4sTmsvpwA==}
-    peerDependencies:
-      '@mui/material': ^5.0.0
-    dependencies:
-      '@mui/material': 5.14.16(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.34)(react-dom@18.2.0)(react@18.2.0)
-    dev: false
-
   /mustache@4.2.0:
     resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
     hasBin: true
@@ -9472,6 +9415,15 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
+  /react-bootstrap-icons@1.10.3(react@18.2.0):
+    resolution: {integrity: sha512-j4hSby6gT9/enhl3ybB1tfr1slZNAYXDVntcRrmVjxB3//2WwqrzpESVqKhyayYVaWpEtnwf9wgUQ03cuziwrw==}
+    peerDependencies:
+      react: '>=16.8.6'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
   /react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -9529,20 +9481,6 @@ packages:
     dependencies:
       '@remix-run/router': 1.10.0
       react: 18.2.0
-    dev: false
-
-  /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
-    peerDependencies:
-      react: '>=16.6.0'
-      react-dom: '>=16.6.0'
-    dependencies:
-      '@babel/runtime': 7.23.2
-      dom-helpers: 5.2.1
-      loose-envify: 1.4.0
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react@18.2.0:
