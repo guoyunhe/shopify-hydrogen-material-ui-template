@@ -7,7 +7,7 @@ import type {
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu} from '~/components/Header';
+import {Header, HeaderMenu, MobileSideMenu} from '~/components/Header';
 import {CartMain} from '~/components/Cart';
 import {
   PredictiveSearchForm,
@@ -137,11 +137,7 @@ function MobileMenuAside({
       onClose={() => setOpen(false)}
       invertedColors
     >
-      <HeaderMenu
-        menu={menu}
-        viewport="mobile"
-        primaryDomainUrl={shop.primaryDomain.url}
-      />
+      <MobileSideMenu menu={menu} primaryDomainUrl={shop.primaryDomain.url} />
     </Drawer>
   );
 }

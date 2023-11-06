@@ -3,8 +3,15 @@ import {Suspense} from 'react';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import type {LayoutProps} from './Layout';
 import {useRootLoaderData} from '~/root';
-import {Avatar, Badge, Box, Typography} from '@mui/joy';
-import {Bag, BagFill, List, Search} from 'react-bootstrap-icons';
+import {
+  Avatar,
+  List,
+  Box,
+  Typography,
+  ListItem,
+  ListItemButton,
+} from '@mui/joy';
+import {Bag, BagFill, List as ListIcon, Search} from 'react-bootstrap-icons';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -70,10 +77,7 @@ export function HeaderMenu({
   const className = `header-menu-${viewport}`;
 
   function closeAside(event: React.MouseEvent<HTMLAnchorElement>) {
-    if (viewport === 'mobile') {
-      event.preventDefault();
-      window.location.href = event.currentTarget.href;
-    }
+    window.dispatchEvent(new Event('menu-close'));
   }
 
   return (
@@ -120,6 +124,61 @@ export function HeaderMenu({
         );
       })}
     </nav>
+  );
+}
+
+export function MobileSideMenu({
+  menu,
+  primaryDomainUrl,
+}: {
+  menu: HeaderProps['header']['menu'];
+  primaryDomainUrl: HeaderQuery['shop']['primaryDomain']['url'];
+}) {
+  const {publicStoreDomain} = useRootLoaderData();
+
+  function closeAside() {
+    window.dispatchEvent(new Event('menu-close'));
+  }
+
+  return (
+    <List>
+      <ListItem>
+        <ListItemButton
+          component={NavLink}
+          end
+          onClick={closeAside}
+          prefetch="intent"
+          style={activeLinkStyle}
+          to="/"
+        >
+          Home
+        </ListItemButton>
+      </ListItem>
+      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
+        if (!item.url) return null;
+
+        // if the url is internal, we strip the domain
+        const url =
+          item.url.includes('myshopify.com') ||
+          item.url.includes(publicStoreDomain) ||
+          item.url.includes(primaryDomainUrl)
+            ? new URL(item.url).pathname
+            : item.url;
+        return (
+          <ListItem key={item.id}>
+            <ListItemButton
+              component={NavLink}
+              prefetch="intent"
+              to={url}
+              end
+              onClick={closeAside}
+            >
+              {item.title}
+            </ListItemButton>
+          </ListItem>
+        );
+      })}
+    </List>
   );
 }
 
@@ -176,7 +235,7 @@ function HeaderMenuMobileToggle() {
         },
       })}
     >
-      <List />
+      <ListIcon />
     </Box>
   );
 }
