@@ -134,7 +134,6 @@ function HeaderCtas({
       role="navigation"
       sx={{display: 'flex', alignItems: 'center'}}
     >
-      <HeaderMenuMobileToggle />
       <Box
         component={NavLink}
         prefetch="intent"
@@ -151,6 +150,7 @@ function HeaderCtas({
       </Box>
       <SearchToggle />
       <CartToggle cart={cart} />
+      <HeaderMenuMobileToggle />
     </Box>
   );
 }
