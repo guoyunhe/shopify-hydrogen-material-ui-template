@@ -241,7 +241,7 @@ function ProductForm({
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
+          window.dispatchEvent(new Event('cart-open'));
         }}
         lines={
           selectedVariant

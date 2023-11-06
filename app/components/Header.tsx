@@ -159,8 +159,11 @@ function HeaderMenuMobileToggle() {
   return (
     <Box
       component="a"
-      href="#mobile-menu-aside"
-      className="header-menu-mobile-toggle"
+      href="#"
+      onClick={(e) => {
+        e.preventDefault();
+        window.dispatchEvent(new Event('menu-open'));
+      }}
       sx={(theme) => ({
         display: 'flex',
         color: 'inherit',
@@ -210,7 +213,10 @@ function CartBadge({count}: {count: number}) {
           color: '#ffffff',
         },
       }}
-      href="#cart-aside"
+      href="#"
+      onClick={() => {
+        window.dispatchEvent(new Event('cart-open'));
+      }}
     >
       {count > 0 ? <BagFill /> : <Bag />}
       {count > 0 && <Box sx={{ml: 0.5}}>{count}</Box>}

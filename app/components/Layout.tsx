@@ -1,5 +1,5 @@
 import {Await} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -13,7 +13,7 @@ import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search';
-import {CssBaseline, CssVarsProvider} from '@mui/joy';
+import {CircularProgress, CssBaseline, CssVarsProvider, Drawer} from '@mui/joy';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -48,16 +48,36 @@ export function Layout({
 }
 
 function CartAside({cart}: {cart: LayoutProps['cart']}) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const handleOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+    window.addEventListener('cart-open', handleOpen);
+    window.addEventListener('cart-close', handleClose);
+    return () => {
+      window.removeEventListener('cart-open', handleOpen);
+      window.removeEventListener('cart-close', handleClose);
+    };
+  }, []);
   return (
-    <Aside id="cart-aside" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
+    <Drawer
+      anchor="right"
+      open={open}
+      onClose={() => setOpen(false)}
+      invertedColors
+    >
+      <Suspense fallback={<CircularProgress />}>
         <Await resolve={cart}>
           {(cart) => {
             return <CartMain cart={cart} layout="aside" />;
           }}
         </Await>
       </Suspense>
-    </Aside>
+    </Drawer>
   );
 }
 
@@ -95,13 +115,33 @@ function MobileMenuAside({
   menu: HeaderQuery['menu'];
   shop: HeaderQuery['shop'];
 }) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const handleOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+    window.addEventListener('menu-open', handleOpen);
+    window.addEventListener('menu-close', handleClose);
+    return () => {
+      window.removeEventListener('menu-open', handleOpen);
+      window.removeEventListener('menu-close', handleClose);
+    };
+  }, []);
   return (
-    <Aside id="mobile-menu-aside" heading="MENU">
+    <Drawer
+      anchor="right"
+      open={open}
+      onClose={() => setOpen(false)}
+      invertedColors
+    >
       <HeaderMenu
         menu={menu}
         viewport="mobile"
         primaryDomainUrl={shop.primaryDomain.url}
       />
-    </Aside>
+    </Drawer>
   );
 }
