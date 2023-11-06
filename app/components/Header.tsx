@@ -199,10 +199,11 @@ function SearchToggle() {
 
 function CartBadge({count}: {count: number}) {
   return (
-    <Badge
-      badgeContent={count}
+    <Box
       component="a"
       sx={{
+        display: 'flex',
+        alignItems: 'center',
         color: 'inherit',
         transition: 'color .32s cubic-bezier(.4,0,.6,1)',
         '&:hover': {
@@ -212,7 +213,8 @@ function CartBadge({count}: {count: number}) {
       href="#cart-aside"
     >
       {count > 0 ? <BagFill /> : <Bag />}
-    </Badge>
+      {count > 0 && <Box sx={{ml: 0.5}}>{count}</Box>}
+    </Box>
   );
 }
 
