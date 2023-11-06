@@ -3,8 +3,8 @@ import {Suspense} from 'react';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import type {LayoutProps} from './Layout';
 import {useRootLoaderData} from '~/root';
-import {Avatar, Badge, Box, SvgIcon, Typography} from '@mui/joy';
-import {Bag, BagFill, List, PeaceFill, Search} from 'react-bootstrap-icons';
+import {Avatar, Badge, Box, Typography} from '@mui/joy';
+import {Bag, BagFill, List, Search} from 'react-bootstrap-icons';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -45,7 +45,6 @@ export function Header({header, isLoggedIn, cart}: HeaderProps) {
           },
         }}
       >
-        <PeaceFill />
         {shop.name}
       </Typography>
       <HeaderMenu
@@ -129,7 +128,12 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas" role="navigation">
+    <Box
+      component="nav"
+      className="header-ctas"
+      role="navigation"
+      sx={{display: 'flex', alignItems: 'center'}}
+    >
       <HeaderMenuMobileToggle />
       <Box
         component={NavLink}
@@ -147,7 +151,7 @@ function HeaderCtas({
       </Box>
       <SearchToggle />
       <CartToggle cart={cart} />
-    </nav>
+    </Box>
   );
 }
 
@@ -157,13 +161,17 @@ function HeaderMenuMobileToggle() {
       component="a"
       href="#mobile-menu-aside"
       className="header-menu-mobile-toggle"
-      sx={{
+      sx={(theme) => ({
+        display: 'flex',
         color: 'inherit',
         transition: 'color .32s cubic-bezier(.4,0,.6,1)',
         '&:hover': {
           color: '#ffffff',
         },
-      }}
+        [theme.breakpoints.up('sm')]: {
+          display: 'none',
+        },
+      })}
     >
       <List />
     </Box>
@@ -176,6 +184,7 @@ function SearchToggle() {
       component="a"
       href="#search-aside"
       sx={{
+        display: 'flex',
         color: 'inherit',
         transition: 'color .32s cubic-bezier(.4,0,.6,1)',
         '&:hover': {
@@ -190,20 +199,19 @@ function SearchToggle() {
 
 function CartBadge({count}: {count: number}) {
   return (
-    <Badge badgeContent={count}>
-      <Box
-        component="a"
-        sx={{
-          color: 'inherit',
-          transition: 'color .32s cubic-bezier(.4,0,.6,1)',
-          '&:hover': {
-            color: '#ffffff',
-          },
-        }}
-        href="#cart-aside"
-      >
-        {count > 0 ? <BagFill /> : <Bag />}
-      </Box>
+    <Badge
+      badgeContent={count}
+      component="a"
+      sx={{
+        color: 'inherit',
+        transition: 'color .32s cubic-bezier(.4,0,.6,1)',
+        '&:hover': {
+          color: '#ffffff',
+        },
+      }}
+      href="#cart-aside"
+    >
+      {count > 0 ? <BagFill /> : <Bag />}
     </Badge>
   );
 }
