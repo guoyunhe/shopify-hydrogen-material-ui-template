@@ -1,3 +1,4 @@
+import {Box, CircularProgress, CssBaseline, Drawer} from '@mui/material';
 import {Await} from '@remix-run/react';
 import {Suspense, useEffect, useState} from 'react';
 import type {
@@ -6,14 +7,13 @@ import type {
   HeaderQuery,
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
-import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu, MobileSideMenu} from '~/components/Header';
 import {CartMain} from '~/components/Cart';
+import {Footer} from '~/components/Footer';
+import {Header, MobileSideMenu} from '~/components/Header';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
 } from '~/components/Search';
-import {CircularProgress, CssBaseline, CssVarsProvider, Drawer} from '@mui/joy';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -31,7 +31,7 @@ export function Layout({
   isLoggedIn,
 }: LayoutProps) {
   return (
-    <CssVarsProvider>
+    <Box>
       <CssBaseline />
       <CartAside cart={cart} />
       <SearchAside />
@@ -43,7 +43,7 @@ export function Layout({
           {(footer) => <Footer menu={footer.menu} shop={header.shop} />}
         </Await>
       </Suspense>
-    </CssVarsProvider>
+    </Box>
   );
 }
 
@@ -64,12 +64,7 @@ function CartAside({cart}: {cart: LayoutProps['cart']}) {
     };
   }, []);
   return (
-    <Drawer
-      anchor="right"
-      open={open}
-      onClose={() => setOpen(false)}
-      invertedColors
-    >
+    <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
       <Suspense fallback={<CircularProgress />}>
         <Await resolve={cart}>
           {(cart) => {
@@ -131,12 +126,7 @@ function MobileMenuAside({
     };
   }, []);
   return (
-    <Drawer
-      anchor="right"
-      open={open}
-      onClose={() => setOpen(false)}
-      invertedColors
-    >
+    <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
       <MobileSideMenu menu={menu} primaryDomainUrl={shop.primaryDomain.url} />
     </Drawer>
   );

@@ -1,17 +1,22 @@
+import {
+  List as ListIcon,
+  Search as SearchIcon,
+  ShoppingBag as ShoppingBagIcon,
+  ShoppingBagOutlined as ShoppingBagOutlinedIcon,
+} from '@mui/icons-material';
+import {
+  Avatar,
+  Box,
+  List,
+  ListItem,
+  ListItemButton,
+  Typography,
+} from '@mui/material';
 import {Await, NavLink} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {HeaderQuery} from 'storefrontapi.generated';
-import type {LayoutProps} from './Layout';
 import {useRootLoaderData} from '~/root';
-import {
-  Avatar,
-  List,
-  Box,
-  Typography,
-  ListItem,
-  ListItemButton,
-} from '@mui/joy';
-import {Bag, BagFill, List as ListIcon, Search} from 'react-bootstrap-icons';
+import type {LayoutProps} from './Layout';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -254,7 +259,7 @@ function SearchToggle() {
         },
       }}
     >
-      <Search />
+      <SearchIcon />
     </Box>
   );
 }
@@ -277,7 +282,7 @@ function CartBadge({count}: {count: number}) {
         window.dispatchEvent(new Event('cart-open'));
       }}
     >
-      {count > 0 ? <BagFill /> : <Bag />}
+      {count > 0 ? <ShoppingBagIcon /> : <ShoppingBagOutlinedIcon />}
       {count > 0 && <Box sx={{ml: 0.5}}>{count}</Box>}
     </Box>
   );
