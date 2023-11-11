@@ -9,7 +9,7 @@ import type {
 import {Aside} from '~/components/Aside';
 import {CartMain} from '~/components/Cart';
 import {Footer} from '~/components/Footer';
-import {Header, MobileSideMenu} from '~/components/Header';
+import {Header, MobileSideMenu} from '~/components/navbar';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,

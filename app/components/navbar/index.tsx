@@ -16,7 +16,7 @@ import {Await, NavLink} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import {useRootLoaderData} from '~/root';
-import type {LayoutProps} from './Layout';
+import type {LayoutProps} from '../Layout';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -153,7 +153,6 @@ export function MobileSideMenu({
           end
           onClick={closeAside}
           prefetch="intent"
-          style={activeLinkStyle}
           to="/"
         >
           Home
