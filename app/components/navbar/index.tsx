@@ -14,9 +14,8 @@ import {
 } from '@mui/material';
 import {Await, NavLink} from '@remix-run/react';
 import {Suspense} from 'react';
-import type {HeaderQuery} from 'storefrontapi.generated';
-import {useRootLoaderData} from '~/root';
 import type {LayoutProps} from '../../layouts/app';
+import {DesktopMenu} from '../desktop-menu';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -27,6 +26,7 @@ export function Navbar({header, isLoggedIn, cart}: HeaderProps) {
   return (
     <AppBar
       position="sticky"
+      color="inherit"
       component="header"
       sx={{
         backdropFilter: 'saturate(180%) blur(20px)',
@@ -35,6 +35,7 @@ export function Navbar({header, isLoggedIn, cart}: HeaderProps) {
     >
       <Toolbar>
         <IconButton
+          color="inherit"
           edge="start"
           sx={{display: {md: 'none'}, mr: 1}}
           onClick={() => window.dispatchEvent(new Event('menu-open'))}
@@ -50,77 +51,10 @@ export function Navbar({header, isLoggedIn, cart}: HeaderProps) {
         >
           {shop.name}
         </Typography>
-        <HeaderMenu
-          menu={menu}
-          viewport="desktop"
-          primaryDomainUrl={header.shop.primaryDomain.url}
-        />
+        <DesktopMenu menu={menu} shop={header.shop} />
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </Toolbar>
     </AppBar>
-  );
-}
-
-export function HeaderMenu({
-  menu,
-  primaryDomainUrl,
-  viewport,
-}: {
-  menu: HeaderProps['header']['menu'];
-  primaryDomainUrl: HeaderQuery['shop']['primaryDomain']['url'];
-  viewport: Viewport;
-}) {
-  const {publicStoreDomain} = useRootLoaderData();
-  const className = `header-menu-${viewport}`;
-
-  function closeAside(event: React.MouseEvent<HTMLAnchorElement>) {
-    window.dispatchEvent(new Event('menu-close'));
-  }
-
-  return (
-    <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={closeAside}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
-      )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
-
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
-          <Typography
-            key={item.id}
-            component={NavLink}
-            prefetch="intent"
-            to={url}
-            end
-            onClick={closeAside}
-            sx={{
-              color: 'inherit',
-              transition: 'color .32s cubic-bezier(.4,0,.6,1)',
-              '&:hover': {
-                color: '#ffffff',
-              },
-            }}
-          >
-            {item.title}
-          </Typography>
-        );
-      })}
-    </nav>
   );
 }
 
