@@ -1,5 +1,5 @@
 [build]
-command = "mv server.netlify.ts server.ts && npm run build"
+command = "mv server.netlify.ts server.ts && mv app/root.netlify.tsx app/root.tsx && npm run build"
 publish = "dist/client"
 
 [dev]
