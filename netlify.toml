@@ -1,6 +1,6 @@
 [build]
-command = "mv server.netlify.ts server.ts && npm run build"
-publish = "public"
+command = "mv server.netlify.ts server.ts && npm run preview"
+publish = "dist/client"
 
 [dev]
 # Run "npm run dev" to start the dev server
