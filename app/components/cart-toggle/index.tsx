@@ -11,7 +11,6 @@ export function CartBadge({count}: {count: number}) {
   return (
     <IconButton
       color="inherit"
-      edge="end"
       onClick={() => {
         window.dispatchEvent(new Event('cart-open'));
       }}

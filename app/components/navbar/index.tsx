@@ -1,4 +1,8 @@
-import {Menu as MenuIcon, Search as SearchIcon} from '@mui/icons-material';
+import {
+  AccountCircle as AccountCircleIcon,
+  Menu as MenuIcon,
+  Search as SearchIcon,
+} from '@mui/icons-material';
 import {
   AppBar,
   Avatar,
@@ -8,9 +12,12 @@ import {
   Typography,
 } from '@mui/material';
 import {NavLink} from '@remix-run/react';
+import {useState} from 'react';
 import type {CartApiQueryFragment, HeaderQuery} from 'storefrontapi.generated';
 import {CartToggle} from '../cart-toggle';
 import {DesktopMenu} from '../desktop-menu';
+import {DesktopSearch} from '../desktop-search';
+import {MobileSearch} from '../mobile-search';
 
 export interface NavbarProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -20,6 +27,8 @@ export interface NavbarProps {
 
 export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
   const {shop, menu} = header;
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
   return (
     <AppBar
       position="sticky"
@@ -30,7 +39,9 @@ export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
         background: 'rgba(255, 255, 255, 0.6)',
       }}
     >
-      <Toolbar>
+      <Toolbar
+        sx={{display: {xs: mobileSearchOpen ? 'none' : 'flex', md: 'flex'}}}
+      >
         <IconButton
           color="inherit"
           edge="start"
@@ -39,6 +50,7 @@ export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
         >
           <MenuIcon />
         </IconButton>
+
         <Typography
           fontSize={20}
           component={NavLink}
@@ -48,59 +60,37 @@ export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
         >
           {shop.name}
         </Typography>
+
         <DesktopMenu menu={menu} shop={header.shop} />
-        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+
+        <Box flex="1 1 auto" />
+
+        <DesktopSearch />
+
+        <IconButton
+          color="inherit"
+          sx={{display: {md: 'none'}}}
+          onClick={() => setMobileSearchOpen(true)}
+        >
+          <SearchIcon />
+        </IconButton>
+
+        <CartToggle cart={cart} />
+
+        <IconButton
+          color="inherit"
+          edge="end"
+          component={NavLink}
+          prefetch="intent"
+          to="/account"
+        >
+          {isLoggedIn ? <Avatar /> : <AccountCircleIcon />}
+        </IconButton>
       </Toolbar>
+      <MobileSearch
+        open={mobileSearchOpen}
+        onClose={() => setMobileSearchOpen(false)}
+      />
     </AppBar>
-  );
-}
-
-function HeaderCtas({
-  isLoggedIn,
-  cart,
-}: Pick<NavbarProps, 'isLoggedIn' | 'cart'>) {
-  return (
-    <Box
-      component="nav"
-      className="header-ctas"
-      role="navigation"
-      sx={{display: 'flex', alignItems: 'center'}}
-    >
-      <Box
-        component={NavLink}
-        prefetch="intent"
-        to="/account"
-        sx={{
-          color: 'inherit',
-          transition: 'color .32s cubic-bezier(.4,0,.6,1)',
-          '&:hover': {
-            color: '#ffffff',
-          },
-        }}
-      >
-        {isLoggedIn ? <Avatar /> : <Avatar sx={{width: 20, height: 20}} />}
-      </Box>
-      <SearchToggle />
-      <CartToggle cart={cart} />
-    </Box>
-  );
-}
-
-function SearchToggle() {
-  return (
-    <Box
-      component="a"
-      href="#search-aside"
-      sx={{
-        display: 'flex',
-        color: 'inherit',
-        transition: 'color .32s cubic-bezier(.4,0,.6,1)',
-        '&:hover': {
-          color: '#ffffff',
-        },
-      }}
-    >
-      <SearchIcon />
-    </Box>
   );
 }
