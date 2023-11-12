@@ -2,7 +2,7 @@ import {Box, CircularProgress, Drawer} from '@mui/material';
 import {Await} from '@remix-run/react';
 import {Suspense, useEffect, useState} from 'react';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import {CartMain} from '../cart';
+import {CartMain} from '../cart-main';
 
 export interface CartDrawerProps {
   cart: Promise<CartApiQueryFragment | null>;
