@@ -8,15 +8,17 @@ import {
   Typography,
 } from '@mui/material';
 import {NavLink} from '@remix-run/react';
-import type {LayoutProps} from '../../layouts/app';
+import type {CartApiQueryFragment, HeaderQuery} from 'storefrontapi.generated';
 import {CartToggle} from '../cart-toggle';
 import {DesktopMenu} from '../desktop-menu';
 
-type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
+export interface NavbarProps {
+  cart: Promise<CartApiQueryFragment | null>;
+  header: HeaderQuery;
+  isLoggedIn: boolean;
+}
 
-type Viewport = 'desktop' | 'mobile';
-
-export function Navbar({header, isLoggedIn, cart}: HeaderProps) {
+export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
   const {shop, menu} = header;
   return (
     <AppBar
@@ -56,7 +58,7 @@ export function Navbar({header, isLoggedIn, cart}: HeaderProps) {
 function HeaderCtas({
   isLoggedIn,
   cart,
-}: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
+}: Pick<NavbarProps, 'isLoggedIn' | 'cart'>) {
   return (
     <Box
       component="nav"
