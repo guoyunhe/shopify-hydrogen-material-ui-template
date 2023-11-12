@@ -9,7 +9,8 @@ import type {
 import {Aside} from '~/components/Aside';
 import {CartMain} from '~/components/Cart';
 import {Footer} from '~/components/Footer';
-import {Header, MobileSideMenu} from '~/components/navbar';
+import {MobileMenu} from '~/components/mobile-menu';
+import {Navbar} from '~/components/navbar';
 import {
   PredictiveSearchForm,
   PredictiveSearchResults,
@@ -35,8 +36,8 @@ export function Layout({
       <CssBaseline />
       <CartAside cart={cart} />
       <SearchAside />
-      <MobileMenuAside menu={header.menu} shop={header.shop} />
-      <Header header={header} cart={cart} isLoggedIn={isLoggedIn} />
+      <MobileMenu menu={header.menu} shop={header.shop} />
+      <Navbar header={header} cart={cart} isLoggedIn={isLoggedIn} />
       <main>{children}</main>
       <Suspense>
         <Await resolve={footer}>
@@ -100,34 +101,5 @@ function SearchAside() {
         <PredictiveSearchResults />
       </div>
     </Aside>
-  );
-}
-
-function MobileMenuAside({
-  menu,
-  shop,
-}: {
-  menu: HeaderQuery['menu'];
-  shop: HeaderQuery['shop'];
-}) {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const handleOpen = () => {
-      setOpen(true);
-    };
-    const handleClose = () => {
-      setOpen(false);
-    };
-    window.addEventListener('menu-open', handleOpen);
-    window.addEventListener('menu-close', handleClose);
-    return () => {
-      window.removeEventListener('menu-open', handleOpen);
-      window.removeEventListener('menu-close', handleClose);
-    };
-  }, []);
-  return (
-    <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-      <MobileSideMenu menu={menu} primaryDomainUrl={shop.primaryDomain.url} />
-    </Drawer>
   );
 }

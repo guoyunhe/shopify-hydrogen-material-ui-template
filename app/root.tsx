@@ -1,31 +1,31 @@
-import {useNonce} from '@shopify/hydrogen';
-import {
-  defer,
-  type SerializeFrom,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  LiveReload,
-  useMatches,
-  useRouteError,
-  useLoaderData,
-  ScrollRestoration,
-  isRouteErrorResponse,
-  type ShouldRevalidateFunction,
-} from '@remix-run/react';
-import type {CustomerAccessToken} from '@shopify/hydrogen/storefront-api-types';
-import favicon from '../public/favicon.svg';
-import resetStyles from './styles/reset.css';
-import appStyles from './styles/app.css';
-import {Layout} from '~/components/Layout';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+  isRouteErrorResponse,
+  useLoaderData,
+  useMatches,
+  useRouteError,
+  type ShouldRevalidateFunction,
+} from '@remix-run/react';
+import {useNonce} from '@shopify/hydrogen';
+import type {CustomerAccessToken} from '@shopify/hydrogen/storefront-api-types';
+import {
+  defer,
+  type LoaderFunctionArgs,
+  type SerializeFrom,
+} from '@shopify/remix-oxygen';
+import {Layout} from '~/layouts/app';
+import favicon from '../public/favicon.svg';
+import appStyles from './styles/app.css';
+import resetStyles from './styles/reset.css';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations

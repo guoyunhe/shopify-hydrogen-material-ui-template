@@ -1,71 +1,63 @@
 import {
-  List as ListIcon,
+  Menu as MenuIcon,
   Search as SearchIcon,
   ShoppingBag as ShoppingBagIcon,
   ShoppingBagOutlined as ShoppingBagOutlinedIcon,
 } from '@mui/icons-material';
 import {
+  AppBar,
   Avatar,
   Box,
-  List,
-  ListItem,
-  ListItemButton,
+  IconButton,
+  Toolbar,
   Typography,
 } from '@mui/material';
 import {Await, NavLink} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import {useRootLoaderData} from '~/root';
-import type {LayoutProps} from '../Layout';
+import type {LayoutProps} from '../../layouts/app';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
 type Viewport = 'desktop' | 'mobile';
 
-export function Header({header, isLoggedIn, cart}: HeaderProps) {
+export function Navbar({header, isLoggedIn, cart}: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <Box
+    <AppBar
+      position="sticky"
       component="header"
       sx={{
-        height: 44,
         backdropFilter: 'saturate(180%) blur(20px)',
-        background: 'rgba(22, 22, 23, 0.8)',
-        position: 'fixed',
-        zIndex: 100,
-        top: 0,
-        left: 0,
-        right: 0,
-        accentColor: 'auto',
-        color: 'rgba(255, 255, 255, 0.7)',
-        px: 2,
-        alignItems: 'center',
-        display: 'flex',
-        userSelect: 'none',
+        background: 'rgba(255, 255, 255, 0.6)',
       }}
     >
-      <Typography
-        component={NavLink}
-        prefetch="intent"
-        to="/"
-        end
-        sx={{
-          color: 'inherit',
-          transition: 'color .32s cubic-bezier(.4,0,.6,1)',
-          '&:hover': {
-            color: '#ffffff',
-          },
-        }}
-      >
-        {shop.name}
-      </Typography>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-      />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-    </Box>
+      <Toolbar>
+        <IconButton
+          edge="start"
+          sx={{display: {md: 'none'}, mr: 1}}
+          onClick={() => window.dispatchEvent(new Event('menu-open'))}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography
+          fontSize={20}
+          component={NavLink}
+          prefetch="intent"
+          to="/"
+          end
+        >
+          {shop.name}
+        </Typography>
+        <HeaderMenu
+          menu={menu}
+          viewport="desktop"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+        />
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </Toolbar>
+    </AppBar>
   );
 }
 
@@ -132,60 +124,6 @@ export function HeaderMenu({
   );
 }
 
-export function MobileSideMenu({
-  menu,
-  primaryDomainUrl,
-}: {
-  menu: HeaderProps['header']['menu'];
-  primaryDomainUrl: HeaderQuery['shop']['primaryDomain']['url'];
-}) {
-  const {publicStoreDomain} = useRootLoaderData();
-
-  function closeAside() {
-    window.dispatchEvent(new Event('menu-close'));
-  }
-
-  return (
-    <List>
-      <ListItem>
-        <ListItemButton
-          component={NavLink}
-          end
-          onClick={closeAside}
-          prefetch="intent"
-          to="/"
-        >
-          Home
-        </ListItemButton>
-      </ListItem>
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
-
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
-          <ListItem key={item.id}>
-            <ListItemButton
-              component={NavLink}
-              prefetch="intent"
-              to={url}
-              end
-              onClick={closeAside}
-            >
-              {item.title}
-            </ListItemButton>
-          </ListItem>
-        );
-      })}
-    </List>
-  );
-}
-
 function HeaderCtas({
   isLoggedIn,
   cart,
@@ -239,7 +177,7 @@ function HeaderMenuMobileToggle() {
         },
       })}
     >
-      <ListIcon />
+      <MenuIcon />
     </Box>
   );
 }
