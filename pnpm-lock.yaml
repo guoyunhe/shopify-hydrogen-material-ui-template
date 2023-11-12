@@ -20,6 +20,15 @@ dependencies:
   '@mui/material':
     specifier: ^5.14.17
     version: 5.14.17(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
+  '@netlify/edge-functions':
+    specifier: ^2.2.0
+    version: 2.2.0
+  '@netlify/remix-edge-adapter':
+    specifier: ^3.1.0
+    version: 3.1.0(@remix-run/server-runtime@2.2.0)
+  '@netlify/remix-runtime':
+    specifier: ^2.1.0
+    version: 2.1.0(@remix-run/server-runtime@2.2.0)
   '@remix-run/css-bundle':
     specifier: ^2.2.0
     version: 2.2.0
@@ -34,10 +43,10 @@ dependencies:
     version: 6.0.2(@remix-run/dev@2.2.0)(@remix-run/react@2.2.0)(@shopify/hydrogen@2023.10.2)(@shopify/remix-oxygen@2.0.1)(@types/node@20.9.0)(@types/react@18.2.37)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
   '@shopify/hydrogen':
     specifier: ^2023.10.2
-    version: 2023.10.2(@remix-run/react@2.2.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
+    version: 2023.10.2(@remix-run/react@2.2.0)(@remix-run/server-runtime@2.2.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
   '@shopify/remix-oxygen':
     specifier: ^2.0.1
-    version: 2.0.1(@shopify/oxygen-workers-types@3.17.3)
+    version: 2.0.1(@remix-run/server-runtime@2.2.0)(@shopify/oxygen-workers-types@3.17.3)
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
@@ -2391,6 +2400,27 @@ packages:
       react-is: 18.2.0
     dev: false
 
+  /@netlify/edge-functions@2.2.0:
+    resolution: {integrity: sha512-8UeKA2nUDB0oWE+Z0gLpA7wpLq8nM+NrZEQMfSdzfMJNvmYVabil/mS07rb0EBrUxM9PCKidKenaiCRnPTBSKw==}
+    dev: false
+
+  /@netlify/remix-edge-adapter@3.1.0(@remix-run/server-runtime@2.2.0):
+    resolution: {integrity: sha512-BSZP3ZN0mSbbsntYDV+7NGo15R5yhs0cm2NJGEDQlABmHwgJbAKxnk1hsztk4WcoQ7HK2jX8bOc4Lk6YNCQE1w==}
+    dependencies:
+      '@netlify/remix-runtime': 2.1.0(@remix-run/server-runtime@2.2.0)
+      isbot: 3.7.0
+    transitivePeerDependencies:
+      - '@remix-run/server-runtime'
+    dev: false
+
+  /@netlify/remix-runtime@2.1.0(@remix-run/server-runtime@2.2.0):
+    resolution: {integrity: sha512-kXP7D6Rp2KkFWWV+il7ZaPQsa/uFpxwn9MC95kPRbJEnkGBMPvqFr1zk6Kjgmf28Ymqg3oXHBIv8pIKRctssBQ==}
+    peerDependencies:
+      '@remix-run/server-runtime': ^2.0.0
+    dependencies:
+      '@remix-run/server-runtime': 2.2.0(typescript@5.2.2)
+    dev: false
+
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
     dependencies:
@@ -3195,11 +3225,11 @@ packages:
       '@remix-run/dev': 2.2.0(@types/node@20.9.0)(typescript@5.2.2)
       '@remix-run/react': 2.2.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
       '@shopify/cli-kit': 3.50.0(@types/node@20.9.0)(@types/react@18.2.37)(typescript@5.2.2)
-      '@shopify/hydrogen': 2023.10.2(@remix-run/react@2.2.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
+      '@shopify/hydrogen': 2023.10.2(@remix-run/react@2.2.0)(@remix-run/server-runtime@2.2.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
       '@shopify/hydrogen-codegen': 0.1.0(graphql@16.8.1)
       '@shopify/mini-oxygen': 2.2.3
       '@shopify/oxygen-cli': 2.6.1(@types/node@20.9.0)(@types/react@18.2.37)(typescript@5.2.2)
-      '@shopify/remix-oxygen': 2.0.1(@shopify/oxygen-workers-types@3.17.3)
+      '@shopify/remix-oxygen': 2.0.1(@remix-run/server-runtime@2.2.0)(@shopify/oxygen-workers-types@3.17.3)
       ansi-escapes: 6.2.0
       diff: 5.1.0
       fs-extra: 11.1.1
@@ -3459,7 +3489,7 @@ packages:
       - xstate
     dev: false
 
-  /@shopify/hydrogen@2023.10.2(@remix-run/react@2.2.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0):
+  /@shopify/hydrogen@2023.10.2(@remix-run/react@2.2.0)(@remix-run/server-runtime@2.2.0)(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-p5nhX/k2RebxvA800mX8C/C7yG+yWnNAynOF1/601JePeLjhOlnHd4F8x+duj9fNu1yVbjPM+erUUvuJHij2sg==}
     peerDependencies:
       '@remix-run/react': ^2.1.0
@@ -3472,6 +3502,7 @@ packages:
         optional: true
     dependencies:
       '@remix-run/react': 2.2.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
+      '@remix-run/server-runtime': 2.2.0(typescript@5.2.2)
       '@shopify/hydrogen-react': 2023.10.0(@types/react@18.2.37)(react-dom@18.2.0)(react@18.2.0)
       content-security-policy-builder: 2.1.1
       react: 18.2.0
@@ -3559,7 +3590,7 @@ packages:
     resolution: {integrity: sha512-5ugCL9sPGzmOaZjeRGaWUWhHgAbemrS6z+R7v6gwiD+BiqSeoFhIY+imLpfdFCVpuOGalpHeCv6o3gv++EHs0A==}
     dev: true
 
-  /@shopify/remix-oxygen@2.0.1(@shopify/oxygen-workers-types@3.17.3):
+  /@shopify/remix-oxygen@2.0.1(@remix-run/server-runtime@2.2.0)(@shopify/oxygen-workers-types@3.17.3):
     resolution: {integrity: sha512-D1dqaAr0P9kARqqh2OKiNW/SglCq3FWX0NdJ/RTrwwQMuwcrKWKJAOL/bxmIbYXVYfY0YsBdhvq3bIbb0KpRog==}
     peerDependencies:
       '@remix-run/server-runtime': ^2.1.0
@@ -3568,6 +3599,7 @@ packages:
       '@remix-run/server-runtime':
         optional: true
     dependencies:
+      '@remix-run/server-runtime': 2.2.0(typescript@5.2.2)
       '@shopify/oxygen-workers-types': 3.17.3
     dev: false
 
