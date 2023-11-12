@@ -3,7 +3,7 @@ import {CartForm, Image, Money} from '@shopify/hydrogen';
 import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/utils';
-import {CartEmpty} from './CartEmpty';
+import {CartEmpty} from '../cart-empty';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -21,7 +21,7 @@ export function CartMain({layout, cart}: CartMainProps) {
 
   return (
     <div className={className}>
-      <CartEmpty hidden={linesCount} layout={layout} />
+      {!linesCount && <CartEmpty />}
       <CartDetails cart={cart} layout={layout} />
     </div>
   );

@@ -7,6 +7,9 @@ export interface MobileSearchProps {
   onClose: () => void;
 }
 
+/**
+ * TODO PredictiveSearchForm and PredictiveSearchResults
+ */
 export function MobileSearch({open, onClose}: MobileSearchProps) {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
