@@ -1,40 +1,19 @@
-# Hydrogen template: Skeleton
+# Shopify Hydrogen App with Material UI
 
-Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dovetail with [Remix](https://remix.run/), Shopify’s full stack web framework. This template contains a **minimal setup** of components, queries and tooling to get started with Hydrogen.
+- [Hydrogen](https://shopify.dev/custom-storefronts/hydrogen), the Shopify API for React
+- [Remix](https://remix.run/docs/en/v1), a build tool that supports server-side-rendering
+- [Material UI](https://mui.com/material-ui/getting-started/), a design system & component library
 
-[Check out Hydrogen docs](https://shopify.dev/custom-storefronts/hydrogen)
-[Get familiar with Remix](https://remix.run/docs/en/v1)
-
-## What's included
-
-- Remix
-- Hydrogen
-- Oxygen
-- Shopify CLI
-- ESLint
-- Prettier
-- GraphQL generator
-- TypeScript and JavaScript flavors
-- Minimal setup of components and routes
-
-## Getting started
-
-**Requirements:**
-
-- Node.js version 16.14.0 or higher
+## Local development
 
 ```bash
-npm create @shopify/hydrogen@latest
+npm install
+cp .env.example .env
+npm run dev
 ```
 
 ## Building for production
 
 ```bash
 npm run build
-```
-
-## Local development
-
-```bash
-npm run dev
 ```
