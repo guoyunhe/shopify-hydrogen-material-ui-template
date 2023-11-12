@@ -1,6 +1,4 @@
-import { Box, CssBaseline } from '@mui/material';
-import { Await } from '@remix-run/react';
-import { Suspense } from 'react';
+import { Box } from '@mui/material';
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -28,16 +26,11 @@ export function Layout({
 }: LayoutProps) {
   return (
     <Box>
-      <CssBaseline />
       <CartDrawer cart={cart} />
       <MobileMenu menu={header.menu} shop={header.shop} />
       <Navbar header={header} cart={cart} isLoggedIn={isLoggedIn} />
       <main>{children}</main>
-      <Suspense>
-        <Await resolve={footer}>
-          {(footer) => <Footer menu={footer.menu} shop={header.shop} />}
-        </Await>
-      </Suspense>
+      <Footer menu={footer.menu} shop={header.shop} />
     </Box>
   );
 }
