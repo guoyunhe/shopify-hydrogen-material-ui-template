@@ -1,12 +1,9 @@
 import { CircularProgress, CssBaseline } from '@mui/material';
 import { Suspense } from 'react';
-import { useTranslation } from 'react-i18next';
 import { RouterProvider } from 'react-router-dom';
-import LanguageEffects from './components/language-effects';
 import router from './router';
 
 export default function App() {
-  const { t } = useTranslation();
   return (
     <Suspense
       fallback={
@@ -23,7 +20,6 @@ export default function App() {
       }
     >
       <CssBaseline enableColorScheme />
-      <LanguageEffects />
       <RouterProvider router={router} />
     </Suspense>
   );
