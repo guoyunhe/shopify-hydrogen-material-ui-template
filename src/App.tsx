@@ -1,4 +1,5 @@
 import { CircularProgress, CssBaseline } from '@mui/material';
+import { CartProvider, ShopifyProvider } from '@shopify/hydrogen-react';
 import { Suspense } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
@@ -20,7 +21,17 @@ export default function App() {
       }
     >
       <CssBaseline enableColorScheme />
-      <RouterProvider router={router} />
+      <ShopifyProvider
+        storeDomain={import.meta.env.VITE_PUBLIC_STORE_DOMAIN}
+        storefrontToken={import.meta.env.VITE_PUBLIC_STOREFRONT_API_TOKEN}
+        storefrontApiVersion="2023-10"
+        countryIsoCode="US"
+        languageIsoCode="EN"
+      >
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </ShopifyProvider>
     </Suspense>
   );
 }

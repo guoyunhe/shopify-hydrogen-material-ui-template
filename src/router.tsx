@@ -1,38 +1,10 @@
-import { lazy } from 'react';
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
-
-// layouts
-const AppLayout = lazy(() => import('./layouts/app'));
-const AdminLayout = lazy(() => import('./layouts/admin'));
-const AuthLayout = lazy(() => import('./layouts/auth'));
-const LandingLayout = lazy(() => import('./layouts/landing'));
-
-// landing pages
-const HomePage = lazy(() => import('./pages/home'));
-const AboutPage = lazy(() => import('./pages/about'));
-const PrivacyPage = lazy(() => import('./pages/privacy'));
-const TermsPage = lazy(() => import('./pages/terms'));
-
-// auth pages
-const LoginPage = lazy(() => import('./pages/login'));
-const RegisterPage = lazy(() => import('./pages/register'));
-
-// app pages
-const DashboardPage = lazy(() => import('./pages/dashboard'));
-const SettingsPage = lazy(() => import('./pages/settings'));
-
-// admin pages
-const AdminDashboardPage = lazy(() => import('./pages/admin-dashboard'));
-const AdminUserListPage = lazy(() => import('./pages/admin-user-list'));
-const AdminSettingsPage = lazy(() => import('./pages/admin-settings'));
-
-// error pages
-const NotFound = lazy(() => import('./pages/not-found'));
+import { AppLayout } from './layouts/app';
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <LandingLayout />,
+    element: <AppLayout />,
     errorElement: <NotFound />,
     children: [
       {

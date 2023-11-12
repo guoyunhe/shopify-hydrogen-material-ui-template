@@ -17,7 +17,7 @@ export type LayoutProps = {
   isLoggedIn: boolean;
 };
 
-export function Layout({
+export function AppLayout({
   cart,
   children = null,
   footer,
