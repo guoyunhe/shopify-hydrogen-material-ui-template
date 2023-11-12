@@ -1,8 +1,9 @@
+import {Link} from '@remix-run/react';
 import {CartForm, Image, Money} from '@shopify/hydrogen';
 import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
-import {Link} from '@remix-run/react';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/utils';
+import {CartEmpty} from './CartEmpty';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -230,35 +231,6 @@ function CartLinePrice({
   return (
     <div>
       <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />
-    </div>
-  );
-}
-
-export function CartEmpty({
-  hidden = false,
-  layout = 'aside',
-}: {
-  hidden: boolean;
-  layout?: CartMainProps['layout'];
-}) {
-  return (
-    <div hidden={hidden}>
-      <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
-      </p>
-      <br />
-      <Link
-        to="/collections"
-        onClick={() => {
-          if (layout === 'aside') {
-            window.location.href = '/collections';
-          }
-        }}
-      >
-        Continue shopping →
-      </Link>
     </div>
   );
 }

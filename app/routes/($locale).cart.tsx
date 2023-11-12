@@ -1,9 +1,9 @@
 import {Await, type MetaFunction} from '@remix-run/react';
-import {Suspense} from 'react';
 import type {CartQueryData} from '@shopify/hydrogen';
 import {CartForm} from '@shopify/hydrogen';
 import {json, type ActionFunctionArgs} from '@shopify/remix-oxygen';
-import {CartMain} from '~/components/Cart';
+import {Suspense} from 'react';
+import {CartMain} from '~/components/cart';
 import {useRootLoaderData} from '~/root';
 
 export const meta: MetaFunction = () => {

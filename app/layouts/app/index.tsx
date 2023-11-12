@@ -7,9 +7,9 @@ import type {
   HeaderQuery,
 } from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
-import {CartMain} from '~/components/Cart';
+import {CartMain} from '~/components/cart';
 import {Footer} from '~/components/Footer';
-import {MobileMenu} from '~/components/mobile-menu';
+import {MobileMenu} from '~/components/mobile-menu-drawer';
 import {Navbar} from '~/components/navbar';
 import {
   PredictiveSearchForm,
