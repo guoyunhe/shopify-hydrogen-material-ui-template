@@ -1,23 +1,25 @@
 {
   "include": ["./**/*.d.ts", "./**/*.ts", "./**/*.tsx"],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "module": "ES2022",
-    "target": "ES2022",
-    "strict": true,
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
     "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["vitest/globals"],
     "baseUrl": ".",
-    "types": ["@shopify/oxygen-workers-types"],
     "paths": {
-      "~/*": ["app/*"]
-    },
-    "noEmit": true
+      "~/*": ["src/*"]
+    }
   }
 }
