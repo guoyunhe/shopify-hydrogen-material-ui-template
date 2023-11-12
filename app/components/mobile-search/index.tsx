@@ -10,6 +10,11 @@ export interface MobileSearchProps {
 export function MobileSearch({open, onClose}: MobileSearchProps) {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
+
+  if (!open) {
+    return null;
+  }
+
   return (
     <Toolbar
       component="form"
@@ -34,6 +39,8 @@ export function MobileSearch({open, onClose}: MobileSearchProps) {
         autoFocus
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        fullWidth
+        placeholder="Search"
       />
     </Toolbar>
   );
