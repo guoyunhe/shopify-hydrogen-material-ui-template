@@ -5,7 +5,7 @@ import type {
   HeaderQuery,
 } from 'storefrontapi.generated';
 import { CartDrawer } from '~/components/cart-drawer';
-import { Footer } from '~/components/Footer';
+import { Footer } from '~/components/footer';
 import { MobileMenu } from '~/components/mobile-menu-drawer';
 import { Navbar } from '~/components/navbar';
 
@@ -30,7 +30,7 @@ export function AppLayout({
       <MobileMenu menu={header.menu} shop={header.shop} />
       <Navbar header={header} cart={cart} isLoggedIn={isLoggedIn} />
       <main>{children}</main>
-      <Footer menu={footer.menu} shop={header.shop} />
+      <Footer />
     </Box>
   );
 }
