@@ -1,7 +1,6 @@
 /// <reference types="vitest" />
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig, loadEnv } from 'vite';
-import adsense from 'vite-plugin-adsense';
 import { ViteEjsPlugin as ejs } from 'vite-plugin-ejs';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -14,7 +13,7 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
-  plugins: [react(), tsconfigPaths(), ejs(env), adsense()],
+  plugins: [react(), tsconfigPaths(), ejs(env)],
   // https://vitest.dev/config/
   test: {
     coverage: {
