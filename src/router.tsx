@@ -1,4 +1,3 @@
-import { RequireAuth } from '@guoyunhe/react-auth';
 import { lazy } from 'react';
 import { RouteObject, createBrowserRouter } from 'react-router-dom';
 
