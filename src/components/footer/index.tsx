@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <Box component="footer" className="footer">
       <Box component="nav" className="footer-menu" role="navigation">
-        {menu.items.map((item) => {
+        {[].map((item) => {
           if (!item.url) return null;
           // if the url is internal, we strip the domain
           const url = item.url.includes(shop.storeDomain)

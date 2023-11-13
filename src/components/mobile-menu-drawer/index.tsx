@@ -28,7 +28,7 @@ export function MobileMenu() {
         <ListItemButton component={NavLink} end onClick={close} to="/">
           <ListItemText primary="Home" />
         </ListItemButton>
-        {menu?.items.map((item) => {
+        {[]?.map((item) => {
           if (!item.url) return null;
 
           // if the url is internal, we strip the domain

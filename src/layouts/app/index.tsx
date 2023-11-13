@@ -9,8 +9,8 @@ export default function AppLayout() {
   return (
     <Box>
       <CartDrawer />
-      <MobileMenu menu={header.menu} shop={header.shop} />
-      <Navbar header={header} cart={cart} isLoggedIn={isLoggedIn} />
+      <MobileMenu menu={[]} />
+      <Navbar />
       <main>
         <Outlet />
       </main>

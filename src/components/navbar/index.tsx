@@ -3,33 +3,18 @@ import {
   Menu as MenuIcon,
   Search as SearchIcon,
 } from '@mui/icons-material';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
+import { useShop } from '@shopify/hydrogen-react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import type {
-  CartApiQueryFragment,
-  HeaderQuery,
-} from 'storefrontapi.generated';
 import { CartToggle } from '../cart-toggle';
 import { DesktopMenu } from '../desktop-menu';
 import { DesktopSearch } from '../desktop-search';
 import { MobileSearch } from '../mobile-search';
 
-export interface NavbarProps {
-  cart: Promise<CartApiQueryFragment | null>;
-  header: HeaderQuery;
-  isLoggedIn: boolean;
-}
-
-export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
-  const { shop, menu } = header;
+export function Navbar() {
+  const menu: any[] = [];
+  const shop = useShop();
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   return (
@@ -54,17 +39,11 @@ export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
           <MenuIcon />
         </IconButton>
 
-        <Typography
-          fontSize={20}
-          component={NavLink}
-          prefetch="intent"
-          to="/"
-          end
-        >
-          {shop.name}
+        <Typography fontSize={20} component={NavLink} to="/" end>
+          TODO Shop Name
         </Typography>
 
-        <DesktopMenu menu={menu} shop={header.shop} />
+        <DesktopMenu menu={menu} />
 
         <Box flex="1 1 auto" />
 
@@ -78,16 +57,15 @@ export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
           <SearchIcon />
         </IconButton>
 
-        <CartToggle cart={cart} />
+        <CartToggle />
 
         <IconButton
           color="inherit"
           edge="end"
           component={NavLink}
-          prefetch="intent"
           to="/account"
         >
-          {isLoggedIn ? <Avatar /> : <AccountCircleIcon />}
+          <AccountCircleIcon />
         </IconButton>
       </Toolbar>
       <MobileSearch

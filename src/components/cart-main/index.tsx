@@ -1,14 +1,10 @@
-import { CartWithActions, Money } from '@shopify/hydrogen-react';
+import { Money, useCart } from '@shopify/hydrogen-react';
 import type { CartApiQueryFragment } from 'storefrontapi.generated';
 import { CartEmpty } from '../cart-empty';
 import { CartLine } from '../cart-line';
 
-export interface CartMainProps {
-  cart: CartWithActions;
-  layout: 'page' | 'aside';
-}
-
-export function CartMain({ layout, cart }: CartMainProps) {
+export function CartMain() {
+  const cart = useCart();
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
     cart &&

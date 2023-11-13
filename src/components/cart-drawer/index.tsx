@@ -1,11 +1,8 @@
 import { Box, Drawer } from '@mui/material';
-import { useCart } from '@shopify/hydrogen-react';
 import { useEffect, useState } from 'react';
 import { CartMain } from '../cart-main';
 
 export function CartDrawer() {
-  const cart = useCart();
-
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -26,7 +23,7 @@ export function CartDrawer() {
   return (
     <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
       <Box sx={{ width: 300 }}>
-        <CartMain cart={cart} />;
+        <CartMain />;
       </Box>
     </Drawer>
   );

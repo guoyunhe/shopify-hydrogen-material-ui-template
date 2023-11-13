@@ -3,11 +3,11 @@ import {
   ShoppingBagOutlined as ShoppingBagOutlinedIcon,
 } from '@mui/icons-material';
 import { Badge, IconButton } from '@mui/material';
-import { Suspense } from 'react';
-import { Await } from 'react-router-dom';
-import type { CartApiQueryFragment } from 'storefrontapi.generated';
+import { useCart } from '@shopify/hydrogen-react';
 
-export function CartBadge({ count }: { count: number }) {
+export function CartToggle() {
+  const cart = useCart();
+  const count = cart.totalQuantity || 0;
   return (
     <IconButton
       color="inherit"
@@ -19,19 +19,5 @@ export function CartBadge({ count }: { count: number }) {
         {count > 0 ? <ShoppingBagIcon /> : <ShoppingBagOutlinedIcon />}
       </Badge>
     </IconButton>
-  );
-}
-
-export interface CartToggleProps {
-  cart: Promise<CartApiQueryFragment | null>;
-}
-
-export function CartToggle({ cart }: CartToggleProps) {
-  return (
-    <Suspense fallback={<CartBadge count={0} />}>
-      <Await resolve={cart}>
-        {(cart) => <CartBadge count={cart?.totalQuantity || 0} />}
-      </Await>
-    </Suspense>
   );
 }
