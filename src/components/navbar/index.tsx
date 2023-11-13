@@ -5,17 +5,33 @@ import {
 } from '@mui/icons-material';
 import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import { useShop } from '@shopify/hydrogen-react';
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { CartToggle } from '../cart-toggle';
 import { DesktopMenu } from '../desktop-menu';
 import { DesktopSearch } from '../desktop-search';
 import { MobileSearch } from '../mobile-search';
 
+const GRAPHQL_QUERY = `
+  query {
+    shop {
+      name
+    }
+  }
+`;
+
 export function Navbar() {
   const menu: any[] = [];
   const shop = useShop();
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(shop.getStorefrontApiUrl());
+    axios.post('https://' + shop.getStorefrontApiUrl(), {
+      query: GRAPHQL_QUERY,
+    });
+  }, []);
 
   return (
     <AppBar

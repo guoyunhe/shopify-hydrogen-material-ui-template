@@ -19,6 +19,7 @@
     "@mui/lab": "5.0.0-alpha.152",
     "@mui/material": "^5.14.17",
     "@shopify/hydrogen-react": "^2023.10.0",
+    "axios": "^1.6.1",
     "i18next": "^23.7.3",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-fetch-backend": "^5.0.2",
