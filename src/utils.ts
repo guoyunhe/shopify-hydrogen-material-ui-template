@@ -1,6 +1,6 @@
-import { useLocation } from '@remix-run/react';
-import type { SelectedOption } from '@shopify/hydrogen/storefront-api-types';
+import type { SelectedOption } from '@shopify/hydrogen-react/storefront-api-types';
 import { useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export function useVariantUrl(
   handle: string,

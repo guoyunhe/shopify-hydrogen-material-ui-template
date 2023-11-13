@@ -11,13 +11,16 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import {NavLink} from '@remix-run/react';
-import {useState} from 'react';
-import type {CartApiQueryFragment, HeaderQuery} from 'storefrontapi.generated';
-import {CartToggle} from '../cart-toggle';
-import {DesktopMenu} from '../desktop-menu';
-import {DesktopSearch} from '../desktop-search';
-import {MobileSearch} from '../mobile-search';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import type {
+  CartApiQueryFragment,
+  HeaderQuery,
+} from 'storefrontapi.generated';
+import { CartToggle } from '../cart-toggle';
+import { DesktopMenu } from '../desktop-menu';
+import { DesktopSearch } from '../desktop-search';
+import { MobileSearch } from '../mobile-search';
 
 export interface NavbarProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -25,8 +28,8 @@ export interface NavbarProps {
   isLoggedIn: boolean;
 }
 
-export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
-  const {shop, menu} = header;
+export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
+  const { shop, menu } = header;
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   return (
@@ -40,12 +43,12 @@ export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
       }}
     >
       <Toolbar
-        sx={{display: {xs: mobileSearchOpen ? 'none' : 'flex', md: 'flex'}}}
+        sx={{ display: { xs: mobileSearchOpen ? 'none' : 'flex', md: 'flex' } }}
       >
         <IconButton
           color="inherit"
           edge="start"
-          sx={{display: {md: 'none'}, mr: 1}}
+          sx={{ display: { md: 'none' }, mr: 1 }}
           onClick={() => window.dispatchEvent(new Event('menu-open'))}
         >
           <MenuIcon />
@@ -69,7 +72,7 @@ export function Navbar({header, isLoggedIn, cart}: NavbarProps) {
 
         <IconButton
           color="inherit"
-          sx={{display: {md: 'none'}}}
+          sx={{ display: { md: 'none' } }}
           onClick={() => setMobileSearchOpen(true)}
         >
           <SearchIcon />

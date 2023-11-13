@@ -1,15 +1,13 @@
-import {Box, CircularProgress, Drawer} from '@mui/material';
-import {Await} from '@remix-run/react';
-import {Suspense, useEffect, useState} from 'react';
-import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import {CartMain} from '../cart-main';
+import { Box, Drawer } from '@mui/material';
+import { useCart } from '@shopify/hydrogen-react';
+import { useEffect, useState } from 'react';
+import { CartMain } from '../cart-main';
 
-export interface CartDrawerProps {
-  cart: Promise<CartApiQueryFragment | null>;
-}
+export function CartDrawer() {
+  const cart = useCart();
 
-export function CartDrawer({cart}: CartDrawerProps) {
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const handleOpen = () => {
       setOpen(true);
@@ -24,16 +22,11 @@ export function CartDrawer({cart}: CartDrawerProps) {
       window.removeEventListener('cart-close', handleClose);
     };
   }, []);
+
   return (
     <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-      <Box sx={{width: 300}}>
-        <Suspense fallback={<CircularProgress />}>
-          <Await resolve={cart}>
-            {(cart) => {
-              return <CartMain cart={cart} layout="aside" />;
-            }}
-          </Await>
-        </Suspense>
+      <Box sx={{ width: 300 }}>
+        <CartMain cart={cart} />;
       </Box>
     </Drawer>
   );

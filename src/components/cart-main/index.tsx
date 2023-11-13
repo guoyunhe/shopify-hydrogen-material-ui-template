@@ -1,18 +1,18 @@
-import {CartForm, Money} from '@shopify/hydrogen';
-import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import {CartEmpty} from '../cart-empty';
-import {CartLine} from '../cart-line';
+import { CartWithActions, Money } from '@shopify/hydrogen-react';
+import type { CartApiQueryFragment } from 'storefrontapi.generated';
+import { CartEmpty } from '../cart-empty';
+import { CartLine } from '../cart-line';
 
 export interface CartMainProps {
-  cart: CartApiQueryFragment | null;
+  cart: CartWithActions;
   layout: 'page' | 'aside';
 }
 
-export function CartMain({layout, cart}: CartMainProps) {
+export function CartMain({ layout, cart }: CartMainProps) {
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
     cart &&
-    Boolean(cart.discountCodes.filter((code) => code.applicable).length);
+    Boolean(cart.discountCodes?.filter((code) => code?.applicable).length);
   const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
 
   return (
@@ -23,12 +23,12 @@ export function CartMain({layout, cart}: CartMainProps) {
   );
 }
 
-function CartDetails({layout, cart}: CartMainProps) {
-  const cartHasItems = !!cart && cart.totalQuantity > 0;
+function CartDetails({ layout, cart }: CartMainProps) {
+  const cartHasItems = cart.totalQuantity && cart.totalQuantity > 0;
 
   return (
     <div className="cart-details">
-      <CartLines lines={cart?.lines} layout={layout} />
+      <CartLines lines={cart?.lines || []} layout={layout} />
       {cartHasItems && (
         <CartSummary cost={cart.cost} layout={layout}>
           <CartDiscounts discountCodes={cart.discountCodes} />
@@ -58,7 +58,7 @@ function CartLines({
   );
 }
 
-function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
+function CartCheckoutActions({ checkoutUrl }: { checkoutUrl: string }) {
   if (!checkoutUrl) return null;
 
   return (
@@ -109,7 +109,7 @@ function CartDiscounts({
   const codes: string[] =
     discountCodes
       ?.filter((discount) => discount.applicable)
-      ?.map(({code}) => code) || [];
+      ?.map(({ code }) => code) || [];
 
   return (
     <div>
@@ -146,15 +146,5 @@ function UpdateDiscountForm({
   discountCodes?: string[];
   children: React.ReactNode;
 }) {
-  return (
-    <CartForm
-      route="/cart"
-      action={CartForm.ACTIONS.DiscountCodesUpdate}
-      inputs={{
-        discountCodes: discountCodes || [],
-      }}
-    >
-      {children}
-    </CartForm>
-  );
+  return <div>TODO Cart Form</div>;
 }

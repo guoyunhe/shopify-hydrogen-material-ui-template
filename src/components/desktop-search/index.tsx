@@ -1,7 +1,7 @@
-import {Search as SearchIcon} from '@mui/icons-material';
-import {Box, Input} from '@mui/material';
-import {useNavigate} from '@remix-run/react';
-import {useState} from 'react';
+import { Search as SearchIcon } from '@mui/icons-material';
+import { Box, Input } from '@mui/material';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function DesktopSearch() {
   const navigate = useNavigate();
@@ -13,15 +13,17 @@ export function DesktopSearch() {
         e.preventDefault();
         navigate('/search?q=' + encodeURIComponent(search));
       }}
-      sx={{display: {xs: 'none', md: 'flex'}}}
+      sx={{ display: { xs: 'none', md: 'flex' } }}
     >
       <Input
         type="search"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search"
-        endAdornment={<SearchIcon sx={{opacity: 0.5, pointerEvents: 'none'}} />}
-        sx={{mr: 3}}
+        endAdornment={
+          <SearchIcon sx={{ opacity: 0.5, pointerEvents: 'none' }} />
+        }
+        sx={{ mr: 3 }}
       />
     </Box>
   );

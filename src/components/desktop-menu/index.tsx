@@ -1,37 +1,24 @@
-import {Box, Button} from '@mui/material';
-import {NavLink} from '@remix-run/react';
-import type {HeaderQuery} from 'storefrontapi.generated';
-import {useRootLoaderData} from '~/root';
+import { Box, Button } from '@mui/material';
+import { useShop } from '@shopify/hydrogen-react';
+import { NavLink } from 'react-router-dom';
 
-export interface DesktopMenuProps {
-  menu: HeaderQuery['menu'];
-  shop: HeaderQuery['shop'];
-}
-
-export function DesktopMenu({menu, shop}: DesktopMenuProps) {
-  const {publicStoreDomain} = useRootLoaderData();
+export function DesktopMenu() {
+  const menu: any[] = [];
+  const shop = useShop();
 
   return (
-    <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-      {menu?.items.map((item) => {
+    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+      {menu?.items?.map((item) => {
         if (!item.url) return null;
 
         // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(shop.primaryDomain.url)
+          item.url.includes(shop.storeDomain)
             ? new URL(item.url).pathname
             : item.url;
         return (
-          <Button
-            key={item.id}
-            color="inherit"
-            component={NavLink}
-            prefetch="intent"
-            to={url}
-            end
-          >
+          <Button key={item.id} color="inherit" component={NavLink} to={url}>
             {item.title}
           </Button>
         );
