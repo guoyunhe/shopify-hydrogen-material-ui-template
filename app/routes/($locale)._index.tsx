@@ -1,7 +1,7 @@
-import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, Link, type MetaFunction} from '@remix-run/react';
-import {Suspense} from 'react';
-import {Image, Money} from '@shopify/hydrogen';
+import { defer, type LoaderFunctionArgs } from '@netlify/remix-runtime';
+import { Await, Link, useLoaderData, type MetaFunction } from '@remix-run/react';
+import { Image, Money } from '@shopify/hydrogen';
+import { Suspense } from 'react';
 import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,

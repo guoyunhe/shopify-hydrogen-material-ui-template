@@ -1,6 +1,6 @@
-import {flattenConnection} from '@shopify/hydrogen';
-import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import type {SitemapQuery} from 'storefrontapi.generated';
+import type { LoaderFunctionArgs } from '@netlify/remix-runtime';
+import { flattenConnection } from '@shopify/hydrogen';
+import type { SitemapQuery } from 'storefrontapi.generated';
 
 /**
  * the google limit is 50K, however, the storefront API

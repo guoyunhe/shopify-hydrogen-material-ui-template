@@ -1,31 +1,31 @@
-import {Suspense} from 'react';
-import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import { defer, redirect, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import {
-  Await,
-  Link,
-  useLoaderData,
-  type MetaFunction,
-  type FetcherWithComponents,
+    Await,
+    Link,
+    useLoaderData,
+    type FetcherWithComponents,
+    type MetaFunction,
 } from '@remix-run/react';
+import { Suspense } from 'react';
 import type {
-  ProductFragment,
-  ProductVariantsQuery,
-  ProductVariantFragment,
+    ProductFragment,
+    ProductVariantFragment,
+    ProductVariantsQuery,
 } from 'storefrontapi.generated';
 
 import {
-  Image,
-  Money,
-  VariantSelector,
-  type VariantOption,
-  getSelectedProductOptions,
-  CartForm,
+    CartForm,
+    Image,
+    Money,
+    VariantSelector,
+    getSelectedProductOptions,
+    type VariantOption,
 } from '@shopify/hydrogen';
 import type {
-  CartLineInput,
-  SelectedOption,
+    CartLineInput,
+    SelectedOption,
 } from '@shopify/hydrogen/storefront-api-types';
-import {getVariantUrl} from '~/utils';
+import { getVariantUrl } from '~/utils';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];

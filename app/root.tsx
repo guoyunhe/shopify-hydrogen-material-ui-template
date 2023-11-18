@@ -3,6 +3,11 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import {
+  defer,
+  type LoaderFunctionArgs,
+  type SerializeFrom,
+} from '@netlify/remix-runtime';
+import {
   Links,
   LiveReload,
   Meta,
@@ -15,14 +20,9 @@ import {
   useRouteError,
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
-import {useNonce} from '@shopify/hydrogen';
-import type {CustomerAccessToken} from '@shopify/hydrogen/storefront-api-types';
-import {
-  defer,
-  type LoaderFunctionArgs,
-  type SerializeFrom,
-} from '@shopify/remix-oxygen';
-import {Layout} from '~/layouts/app';
+import { useNonce } from '@shopify/hydrogen';
+import type { CustomerAccessToken } from '@shopify/hydrogen/storefront-api-types';
+import { Layout } from '~/layouts/app';
 import favicon from '../public/favicon.svg';
 import appStyles from './styles/app.css';
 import resetStyles from './styles/reset.css';

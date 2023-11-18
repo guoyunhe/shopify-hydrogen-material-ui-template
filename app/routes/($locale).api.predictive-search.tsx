@@ -1,17 +1,17 @@
-import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import type {
-  NormalizedPredictiveSearch,
-  NormalizedPredictiveSearchResults,
+    NormalizedPredictiveSearch,
+    NormalizedPredictiveSearchResults,
 } from '~/components/Search';
-import {NO_PREDICTIVE_SEARCH_RESULTS} from '~/components/Search';
+import { NO_PREDICTIVE_SEARCH_RESULTS } from '~/components/Search';
 
 import type {
-  PredictiveArticleFragment,
-  PredictiveCollectionFragment,
-  PredictivePageFragment,
-  PredictiveProductFragment,
-  PredictiveQueryFragment,
-  PredictiveSearchQuery,
+    PredictiveArticleFragment,
+    PredictiveCollectionFragment,
+    PredictivePageFragment,
+    PredictiveProductFragment,
+    PredictiveQueryFragment,
+    PredictiveSearchQuery,
 } from 'storefrontapi.generated';
 
 type PredictiveSearchResultItem =

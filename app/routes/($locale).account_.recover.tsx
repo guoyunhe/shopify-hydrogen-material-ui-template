@@ -1,10 +1,10 @@
 import {
-  json,
-  redirect,
-  type LoaderFunctionArgs,
-  type ActionFunctionArgs,
-} from '@shopify/remix-oxygen';
-import {Form, Link, useActionData} from '@remix-run/react';
+    json,
+    redirect,
+    type ActionFunctionArgs,
+    type LoaderFunctionArgs,
+} from '@netlify/remix-runtime';
+import { Form, Link, useActionData } from '@remix-run/react';
 
 type ActionResponse = {
   error?: string;

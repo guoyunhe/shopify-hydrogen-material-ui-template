@@ -3,9 +3,9 @@ import {
   redirect,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
-import {Form, Link, useActionData} from '@remix-run/react';
-import type {CustomerCreateMutation} from 'storefrontapi.generated';
+} from '@netlify/remix-runtime';
+import { Form, Link, useActionData } from '@remix-run/react';
+import type { CustomerCreateMutation } from 'storefrontapi.generated';
 
 type ActionResponse = {
   error: string | null;
