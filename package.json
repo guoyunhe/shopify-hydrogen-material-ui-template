@@ -1,15 +1,14 @@
 {
-  "name": "apple-style-shop",
   "private": true,
   "sideEffects": false,
-  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "build": "shopify hydrogen build",
-    "dev": "shopify hydrogen dev --codegen",
-    "preview": "npm run build && shopify hydrogen preview",
+    "build": "remix build",
+    "codegen": "shopify hydrogen codegen",
+    "dev": "remix dev --manual -c \"netlify dev\"",
     "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx .",
-    "typecheck": "tsc --noEmit",
-    "codegen": "shopify hydrogen codegen"
+    "preview": "netlify serve",
+    "typecheck": "tsc --noEmit"
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
@@ -23,32 +22,29 @@
     "@netlify/remix-runtime": "^2.1.0",
     "@remix-run/css-bundle": "^2.2.0",
     "@remix-run/react": "^2.2.0",
-    "@shopify/cli": "^3.50.2",
-    "@shopify/cli-hydrogen": "^6.0.2",
-    "@shopify/hydrogen": "^2023.10.2",
-    "@shopify/remix-oxygen": "^2.0.1",
-    "graphql": "^16.8.1",
+    "@shopify/cli": "3.50.0",
+    "@shopify/cli-hydrogen": "^6.0.0",
+    "@shopify/hydrogen": "^2023.10.0",
+    "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
-    "isbot": "^3.7.0",
+    "isbot": "^3.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.2.0",
     "@remix-run/eslint-config": "^2.2.0",
-    "@shopify/oxygen-workers-types": "^3.17.3",
     "@shopify/prettier-config": "^1.1.2",
     "@total-typescript/ts-reset": "^0.4.2",
-    "@types/eslint": "^8.44.7",
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
-    "eslint": "^8.53.0",
-    "eslint-plugin-hydrogen": "^0.12.3",
-    "prettier": "^2.8.8",
+    "@types/eslint": "^8.4.10",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
+    "eslint": "^8.20.0",
+    "eslint-plugin-hydrogen": "0.12.2",
+    "prettier": "^2.8.4",
     "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=16.13"
-  },
-  "repository": "git@github.com:guoyunhe/shopify-apple-style-shop.git"
+  }
 }
