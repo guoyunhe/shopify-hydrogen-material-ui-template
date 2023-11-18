@@ -1,20 +1,13 @@
 /// <reference types="@remix-run/dev" />
-/// <reference types="@shopify/remix-oxygen" />
-/// <reference types="@shopify/oxygen-workers-types" />
 /// <reference types="@netlify/remix-runtime" />
 
 // Enhance TypeScript's built-in typings.
 import '@total-typescript/ts-reset';
 
-import type {HydrogenCart, Storefront} from '@shopify/hydrogen';
-import type {
-  CountryCode,
-  CustomerAccessToken,
-  LanguageCode,
-} from '@shopify/hydrogen/storefront-api-types';
-import type {HydrogenSession} from './server';
-
-import {Context} from '@netlify/edge-functions';
+import { Context } from '@netlify/edge-functions';
+import type { HydrogenCart, Storefront } from '@shopify/hydrogen';
+import type { CustomerAccessToken } from '@shopify/hydrogen/storefront-api-types';
+import type { HydrogenSession } from './server';
 
 declare global {
   /**
@@ -31,35 +24,6 @@ declare global {
     PRIVATE_STOREFRONT_API_TOKEN: string;
     PUBLIC_STORE_DOMAIN: string;
     PUBLIC_STOREFRONT_ID: string;
-  }
-
-  /**
-   * The I18nLocale used for Storefront API query context.
-   */
-  type I18nLocale = {
-    language: LanguageCode;
-    country: CountryCode;
-    pathPrefix: string;
-  };
-}
-
-declare module '@shopify/remix-oxygen' {
-  /**
-   * Declare local additions to the Remix loader context.
-   */
-  export interface AppLoadContext {
-    env: Env;
-    cart: HydrogenCart;
-    storefront: Storefront<I18nLocale>;
-    session: HydrogenSession;
-    waitUntil: ExecutionContext['waitUntil'];
-  }
-
-  /**
-   * Declare the data we expect to access via `context.session`.
-   */
-  export interface SessionData {
-    customerAccessToken: CustomerAccessToken;
   }
 }
 
