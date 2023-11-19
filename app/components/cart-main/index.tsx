@@ -1,3 +1,4 @@
+import { List } from '@mui/material';
 import { CartForm, Money } from '@shopify/hydrogen';
 import type { CartApiQueryFragment } from 'storefrontapi.generated';
 import { CartEmpty } from '../cart-empty';
@@ -49,11 +50,11 @@ function CartLines({
 
   return (
     <div aria-labelledby="cart-lines">
-      <ul>
+      <List>
         {lines.nodes.map((line) => (
           <CartLine key={line.id} line={line} />
         ))}
-      </ul>
+      </List>
     </div>
   );
 }

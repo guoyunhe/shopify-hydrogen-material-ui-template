@@ -3,7 +3,7 @@ import {
   Delete as DeleteIcon,
   Remove as RemoveIcon,
 } from '@mui/icons-material';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, ListItem, Typography } from '@mui/material';
 import { Link } from '@remix-run/react';
 import { CartForm, Image, Money } from '@shopify/hydrogen';
 import type { CartLineUpdateInput } from '@shopify/hydrogen/storefront-api-types';
@@ -18,7 +18,7 @@ export function CartLine({ line }: { line: CartLine }) {
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
 
   return (
-    <li key={id} className="cart-line">
+    <ListItem key={id} className="cart-line" divider>
       {image && (
         <Image
           alt={title}
@@ -54,21 +54,7 @@ export function CartLine({ line }: { line: CartLine }) {
         </ul>
         <CartLineQuantity line={line} />
       </div>
-    </li>
-  );
-}
-
-function CartLineRemoveButton({ lineIds }: { lineIds: string[] }) {
-  return (
-    <CartForm
-      route="/cart"
-      action={CartForm.ACTIONS.LinesRemove}
-      inputs={{ lineIds }}
-    >
-      <IconButton color="error" type="submit">
-        <DeleteIcon />
-      </IconButton>
-    </CartForm>
+    </ListItem>
   );
 }
 
@@ -125,9 +111,23 @@ function CartLinePrice({
   }
 
   return (
-    <div>
+    <Typography color="primary">
       <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />
-    </div>
+    </Typography>
+  );
+}
+
+function CartLineRemoveButton({ lineIds }: { lineIds: string[] }) {
+  return (
+    <CartForm
+      route="/cart"
+      action={CartForm.ACTIONS.LinesRemove}
+      inputs={{ lineIds }}
+    >
+      <IconButton color="error" type="submit">
+        <DeleteIcon />
+      </IconButton>
+    </CartForm>
   );
 }
 
