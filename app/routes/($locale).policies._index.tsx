@@ -1,19 +1,19 @@
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import { Link, useLoaderData } from '@remix-run/react';
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({ context }: LoaderFunctionArgs) {
   const data = await context.storefront.query(POLICIES_QUERY);
   const policies = Object.values(data.shop || {});
 
   if (!policies.length) {
-    throw new Response('No policies found', {status: 404});
+    throw new Response('No policies found', { status: 404 });
   }
 
-  return json({policies});
+  return json({ policies });
 }
 
 export default function Policies() {
-  const {policies} = useLoaderData<typeof loader>();
+  const { policies } = useLoaderData<typeof loader>();
 
   return (
     <div className="policies">

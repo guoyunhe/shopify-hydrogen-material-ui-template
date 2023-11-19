@@ -1,14 +1,18 @@
-import { json, redirect, type LoaderFunctionArgs } from '@netlify/remix-runtime';
+import {
+  json,
+  redirect,
+  type LoaderFunctionArgs,
+} from '@netlify/remix-runtime';
 import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
 import { Image, Money, flattenConnection } from '@shopify/hydrogen';
 import type { OrderLineItemFullFragment } from 'storefrontapi.generated';
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Order ${data?.order?.name}`}];
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: `Order ${data?.order?.name}` }];
 };
 
-export async function loader({params, context}: LoaderFunctionArgs) {
-  const {session, storefront} = context;
+export async function loader({ params, context }: LoaderFunctionArgs) {
+  const { session, storefront } = context;
 
   if (!params.id) {
     return redirect('/account/orders');
@@ -21,12 +25,12 @@ export async function loader({params, context}: LoaderFunctionArgs) {
     return redirect('/account/login');
   }
 
-  const {order} = await storefront.query(CUSTOMER_ORDER_QUERY, {
-    variables: {orderId},
+  const { order } = await storefront.query(CUSTOMER_ORDER_QUERY, {
+    variables: { orderId },
   });
 
   if (!order || !('lineItems' in order)) {
-    throw new Response('Order not found', {status: 404});
+    throw new Response('Order not found', { status: 404 });
   }
 
   const lineItems = flattenConnection(order.lineItems);
@@ -50,7 +54,7 @@ export async function loader({params, context}: LoaderFunctionArgs) {
 }
 
 export default function OrderRoute() {
-  const {order, lineItems, discountValue, discountPercentage} =
+  const { order, lineItems, discountValue, discountPercentage } =
     useLoaderData<typeof loader>();
   return (
     <div className="account-order">
@@ -163,7 +167,7 @@ export default function OrderRoute() {
   );
 }
 
-function OrderLineRow({lineItem}: {lineItem: OrderLineItemFullFragment}) {
+function OrderLineRow({ lineItem }: { lineItem: OrderLineItemFullFragment }) {
   return (
     <tr key={lineItem.variant!.id}>
       <td>

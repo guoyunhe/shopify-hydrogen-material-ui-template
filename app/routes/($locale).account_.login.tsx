@@ -11,21 +11,21 @@ type ActionResponse = {
 };
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Login'}];
+  return [{ title: 'Login' }];
 };
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({ context }: LoaderFunctionArgs) {
   if (await context.session.get('customerAccessToken')) {
     return redirect('/account');
   }
   return json({});
 }
 
-export async function action({request, context}: ActionFunctionArgs) {
-  const {session, storefront} = context;
+export async function action({ request, context }: ActionFunctionArgs) {
+  const { session, storefront } = context;
 
   if (request.method !== 'POST') {
-    return json({error: 'Method not allowed'}, {status: 405});
+    return json({ error: 'Method not allowed' }, { status: 405 });
   }
 
   try {
@@ -38,11 +38,11 @@ export async function action({request, context}: ActionFunctionArgs) {
       throw new Error('Please provide both an email and a password.');
     }
 
-    const {customerAccessTokenCreate} = await storefront.mutate(
+    const { customerAccessTokenCreate } = await storefront.mutate(
       LOGIN_MUTATION,
       {
         variables: {
-          input: {email, password},
+          input: { email, password },
         },
       },
     );
@@ -51,7 +51,7 @@ export async function action({request, context}: ActionFunctionArgs) {
       throw new Error(customerAccessTokenCreate?.customerUserErrors[0].message);
     }
 
-    const {customerAccessToken} = customerAccessTokenCreate;
+    const { customerAccessToken } = customerAccessTokenCreate;
     session.set('customerAccessToken', customerAccessToken);
 
     return redirect('/account', {
@@ -61,9 +61,9 @@ export async function action({request, context}: ActionFunctionArgs) {
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return json({error: error.message}, {status: 400});
+      return json({ error: error.message }, { status: 400 });
     }
-    return json({error}, {status: 400});
+    return json({ error }, { status: 400 });
   }
 }
 

@@ -21,7 +21,7 @@ type Entry = {
 
 export async function loader({
   request,
-  context: {storefront},
+  context: { storefront },
 }: LoaderFunctionArgs) {
   const data = await storefront.query(SITEMAP_QUERY, {
     variables: {
@@ -31,10 +31,13 @@ export async function loader({
   });
 
   if (!data) {
-    throw new Response('No data found', {status: 404});
+    throw new Response('No data found', { status: 404 });
   }
 
-  const sitemap = generateSitemap({data, baseUrl: new URL(request.url).origin});
+  const sitemap = generateSitemap({
+    data,
+    baseUrl: new URL(request.url).origin,
+  });
 
   return new Response(sitemap, {
     headers: {
@@ -119,7 +122,7 @@ function generateSitemap({
     </urlset>`;
 }
 
-function renderUrlTag({url, lastMod, changeFreq, image}: Entry) {
+function renderUrlTag({ url, lastMod, changeFreq, image }: Entry) {
   const imageTag = image
     ? `<image:image>
         <image:loc>${image.url}</image:loc>

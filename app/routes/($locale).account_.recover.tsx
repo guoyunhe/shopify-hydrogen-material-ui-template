@@ -1,8 +1,8 @@
 import {
-    json,
-    redirect,
-    type ActionFunctionArgs,
-    type LoaderFunctionArgs,
+  json,
+  redirect,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
 import { Form, Link, useActionData } from '@remix-run/react';
 
@@ -11,7 +11,7 @@ type ActionResponse = {
   resetRequested?: boolean;
 };
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({ context }: LoaderFunctionArgs) {
   const customerAccessToken = await context.session.get('customerAccessToken');
   if (customerAccessToken) {
     return redirect('/account');
@@ -20,13 +20,13 @@ export async function loader({context}: LoaderFunctionArgs) {
   return json({});
 }
 
-export async function action({request, context}: ActionFunctionArgs) {
-  const {storefront} = context;
+export async function action({ request, context }: ActionFunctionArgs) {
+  const { storefront } = context;
   const form = await request.formData();
   const email = form.has('email') ? String(form.get('email')) : null;
 
   if (request.method !== 'POST') {
-    return json({error: 'Method not allowed'}, {status: 405});
+    return json({ error: 'Method not allowed' }, { status: 405 });
   }
 
   try {
@@ -34,16 +34,16 @@ export async function action({request, context}: ActionFunctionArgs) {
       throw new Error('Please provide an email.');
     }
     await storefront.mutate(CUSTOMER_RECOVER_MUTATION, {
-      variables: {email},
+      variables: { email },
     });
 
-    return json({resetRequested: true});
+    return json({ resetRequested: true });
   } catch (error: unknown) {
     const resetRequested = false;
     if (error instanceof Error) {
-      return json({error: error.message, resetRequested}, {status: 400});
+      return json({ error: error.message, resetRequested }, { status: 400 });
     }
-    return json({error, resetRequested}, {status: 400});
+    return json({ error, resetRequested }, { status: 400 });
   }
 }
 

@@ -1,15 +1,15 @@
-import {Box, CssBaseline} from '@mui/material';
-import {Await} from '@remix-run/react';
-import {Suspense} from 'react';
+import { Box, CssBaseline } from '@mui/material';
+import { Await } from '@remix-run/react';
+import { Suspense } from 'react';
 import type {
   CartApiQueryFragment,
   FooterQuery,
   HeaderQuery,
 } from 'storefrontapi.generated';
-import {CartDrawer} from '~/components/cart-drawer';
-import {Footer} from '~/components/Footer';
-import {MobileMenu} from '~/components/mobile-menu-drawer';
-import {Navbar} from '~/components/navbar';
+import { CartDrawer } from '~/components/cart-drawer';
+import { Footer } from '~/components/Footer';
+import { MobileMenu } from '~/components/mobile-menu-drawer';
+import { Navbar } from '~/components/navbar';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;

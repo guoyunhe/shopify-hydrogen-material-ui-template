@@ -1,17 +1,17 @@
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import type {
-    NormalizedPredictiveSearch,
-    NormalizedPredictiveSearchResults,
+  NormalizedPredictiveSearch,
+  NormalizedPredictiveSearchResults,
 } from '~/components/Search';
 import { NO_PREDICTIVE_SEARCH_RESULTS } from '~/components/Search';
 
 import type {
-    PredictiveArticleFragment,
-    PredictiveCollectionFragment,
-    PredictivePageFragment,
-    PredictiveProductFragment,
-    PredictiveQueryFragment,
-    PredictiveSearchQuery,
+  PredictiveArticleFragment,
+  PredictiveCollectionFragment,
+  PredictivePageFragment,
+  PredictiveProductFragment,
+  PredictiveQueryFragment,
+  PredictiveSearchQuery,
 } from 'storefrontapi.generated';
 
 type PredictiveSearchResultItem =
@@ -39,7 +39,7 @@ const DEFAULT_SEARCH_TYPES: PredictiveSearchTypes[] = [
  * Fetches the search results from the predictive search API
  * requested by the SearchForm component
  */
-export async function action({request, params, context}: LoaderFunctionArgs) {
+export async function action({ request, params, context }: LoaderFunctionArgs) {
   if (request.method !== 'POST') {
     throw new Error('Invalid request method');
   }
@@ -79,7 +79,7 @@ async function fetchPredictiveSearchResults({
 
   if (!searchTerm) {
     return {
-      searchResults: {results: null, totalResults: 0},
+      searchResults: { results: null, totalResults: 0 },
       searchTerm,
       searchTypes,
     };
@@ -103,7 +103,7 @@ async function fetchPredictiveSearchResults({
     params.locale,
   );
 
-  return {searchResults, searchTerm, searchTypes};
+  return { searchResults, searchTerm, searchTypes };
 }
 
 /**
@@ -241,7 +241,7 @@ export function normalizePredictiveSearchResults(
     });
   }
 
-  return {results, totalResults};
+  return { results, totalResults };
 }
 
 const PREDICTIVE_SEARCH_QUERY = `#graphql

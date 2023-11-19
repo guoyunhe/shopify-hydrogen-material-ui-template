@@ -11,9 +11,9 @@ import { redirect, type LoaderFunctionArgs } from '@netlify/remix-runtime';
  *
  * ```
  */
-export async function loader({request, context, params}: LoaderFunctionArgs) {
-  const {cart} = context;
-  const {code} = params;
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
+  const { cart } = context;
+  const { code } = params;
 
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);

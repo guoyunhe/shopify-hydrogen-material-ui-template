@@ -1,16 +1,16 @@
-import {Drawer, List, ListItemButton, ListItemText} from '@mui/material';
-import {NavLink} from '@remix-run/react';
-import {useEffect, useState} from 'react';
-import type {HeaderQuery} from 'storefrontapi.generated';
-import {useRootLoaderData} from '~/root';
+import { Drawer, List, ListItemButton, ListItemText } from '@mui/material';
+import { NavLink } from '@remix-run/react';
+import { useEffect, useState } from 'react';
+import type { HeaderQuery } from 'storefrontapi.generated';
+import { useRootLoaderData } from '~/root';
 
 export interface MobileMenuProps {
   menu: HeaderQuery['menu'];
   shop: HeaderQuery['shop'];
 }
 
-export function MobileMenu({menu, shop}: MobileMenuProps) {
-  const {publicStoreDomain} = useRootLoaderData();
+export function MobileMenu({ menu, shop }: MobileMenuProps) {
+  const { publicStoreDomain } = useRootLoaderData();
 
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -30,7 +30,7 @@ export function MobileMenu({menu, shop}: MobileMenuProps) {
   }, []);
   return (
     <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
-      <List sx={{width: 300}}>
+      <List sx={{ width: 300 }}>
         <ListItemButton
           component={NavLink}
           end

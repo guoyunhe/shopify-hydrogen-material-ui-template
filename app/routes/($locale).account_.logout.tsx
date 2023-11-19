@@ -1,20 +1,24 @@
-import { json, redirect, type ActionFunctionArgs } from '@netlify/remix-runtime';
+import {
+  json,
+  redirect,
+  type ActionFunctionArgs,
+} from '@netlify/remix-runtime';
 import { type MetaFunction } from '@remix-run/react';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Logout'}];
+  return [{ title: 'Logout' }];
 };
 
 export async function loader() {
   return redirect('/account/login');
 }
 
-export async function action({request, context}: ActionFunctionArgs) {
-  const {session} = context;
+export async function action({ request, context }: ActionFunctionArgs) {
+  const { session } = context;
   session.unset('customerAccessToken');
 
   if (request.method !== 'POST') {
-    return json({error: 'Method not allowed'}, {status: 405});
+    return json({ error: 'Method not allowed' }, { status: 405 });
   }
 
   return redirect('/', {

@@ -1,14 +1,14 @@
-import {Box, CircularProgress, Drawer} from '@mui/material';
-import {Await} from '@remix-run/react';
-import {Suspense, useEffect, useState} from 'react';
-import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import {CartMain} from '../cart-main';
+import { Box, CircularProgress, Drawer } from '@mui/material';
+import { Await } from '@remix-run/react';
+import { Suspense, useEffect, useState } from 'react';
+import type { CartApiQueryFragment } from 'storefrontapi.generated';
+import { CartMain } from '../cart-main';
 
 export interface CartDrawerProps {
   cart: Promise<CartApiQueryFragment | null>;
 }
 
-export function CartDrawer({cart}: CartDrawerProps) {
+export function CartDrawer({ cart }: CartDrawerProps) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const handleOpen = () => {
@@ -26,7 +26,7 @@ export function CartDrawer({cart}: CartDrawerProps) {
   }, []);
   return (
     <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-      <Box sx={{width: 300}}>
+      <Box sx={{ width: 300 }}>
         <Suspense fallback={<CircularProgress />}>
           <Await resolve={cart}>
             {(cart) => {

@@ -1,11 +1,11 @@
-import {NavLink} from '@remix-run/react';
-import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
-import {useRootLoaderData} from '~/root';
+import { NavLink } from '@remix-run/react';
+import type { FooterQuery, HeaderQuery } from 'storefrontapi.generated';
+import { useRootLoaderData } from '~/root';
 
 export function Footer({
   menu,
   shop,
-}: FooterQuery & {shop: HeaderQuery['shop']}) {
+}: FooterQuery & { shop: HeaderQuery['shop'] }) {
   return (
     <footer className="footer">
       <FooterMenu menu={menu} primaryDomainUrl={shop.primaryDomain.url} />
@@ -20,7 +20,7 @@ function FooterMenu({
   menu: FooterQuery['menu'];
   primaryDomainUrl: HeaderQuery['shop']['primaryDomain']['url'];
 }) {
-  const {publicStoreDomain} = useRootLoaderData();
+  const { publicStoreDomain } = useRootLoaderData();
 
   return (
     <nav className="footer-menu" role="navigation">

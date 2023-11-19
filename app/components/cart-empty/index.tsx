@@ -1,5 +1,5 @@
-import {ArrowForward} from '@mui/icons-material';
-import {Box, Button} from '@mui/material';
+import { ArrowForward } from '@mui/icons-material';
+import { Box, Button } from '@mui/material';
 import cartEmptyImage from './cart-empty.jpg';
 
 export function CartEmpty() {
@@ -15,7 +15,7 @@ export function CartEmpty() {
         src={cartEmptyImage}
         width={600}
         height={600}
-        sx={{maxWidth: '100%', height: 'auto'}}
+        sx={{ maxWidth: '100%', height: 'auto' }}
       />
       <br />
       <p>

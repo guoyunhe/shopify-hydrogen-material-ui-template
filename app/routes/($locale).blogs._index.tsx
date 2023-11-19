@@ -3,35 +3,35 @@ import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
 import { getPaginationVariables, Pagination } from '@shopify/hydrogen';
 
 export const meta: MetaFunction = () => {
-  return [{title: `Hydrogen | Blogs`}];
+  return [{ title: `Hydrogen | Blogs` }];
 };
 
 export const loader = async ({
   request,
-  context: {storefront},
+  context: { storefront },
 }: LoaderFunctionArgs) => {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 10,
   });
 
-  const {blogs} = await storefront.query(BLOGS_QUERY, {
+  const { blogs } = await storefront.query(BLOGS_QUERY, {
     variables: {
       ...paginationVariables,
     },
   });
 
-  return json({blogs});
+  return json({ blogs });
 };
 
 export default function Blogs() {
-  const {blogs} = useLoaderData<typeof loader>();
+  const { blogs } = useLoaderData<typeof loader>();
 
   return (
     <div className="blogs">
       <h1>Blogs</h1>
       <div className="blogs-grid">
         <Pagination connection={blogs}>
-          {({nodes, isLoading, PreviousLink, NextLink}) => {
+          {({ nodes, isLoading, PreviousLink, NextLink }) => {
             return (
               <>
                 <PreviousLink>

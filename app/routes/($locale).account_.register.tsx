@@ -14,7 +14,7 @@ type ActionResponse = {
     | null;
 };
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({ context }: LoaderFunctionArgs) {
   const customerAccessToken = await context.session.get('customerAccessToken');
   if (customerAccessToken) {
     return redirect('/account');
@@ -23,12 +23,12 @@ export async function loader({context}: LoaderFunctionArgs) {
   return json({});
 }
 
-export async function action({request, context}: ActionFunctionArgs) {
+export async function action({ request, context }: ActionFunctionArgs) {
   if (request.method !== 'POST') {
-    return json({error: 'Method not allowed'}, {status: 405});
+    return json({ error: 'Method not allowed' }, { status: 405 });
   }
 
-  const {storefront, session} = context;
+  const { storefront, session } = context;
   const form = await request.formData();
   const email = String(form.has('email') ? form.get('email') : '');
   const password = form.has('password') ? String(form.get('password')) : null;
@@ -49,11 +49,14 @@ export async function action({request, context}: ActionFunctionArgs) {
       throw new Error('Please provide both an email and a password.');
     }
 
-    const {customerCreate} = await storefront.mutate(CUSTOMER_CREATE_MUTATION, {
-      variables: {
-        input: {email, password},
+    const { customerCreate } = await storefront.mutate(
+      CUSTOMER_CREATE_MUTATION,
+      {
+        variables: {
+          input: { email, password },
+        },
       },
-    });
+    );
 
     if (customerCreate?.customerUserErrors?.length) {
       throw new Error(customerCreate?.customerUserErrors[0].message);
@@ -65,7 +68,7 @@ export async function action({request, context}: ActionFunctionArgs) {
     }
 
     // get an access token for the new customer
-    const {customerAccessTokenCreate} = await storefront.mutate(
+    const { customerAccessTokenCreate } = await storefront.mutate(
       REGISTER_LOGIN_MUTATION,
       {
         variables: {
@@ -86,7 +89,7 @@ export async function action({request, context}: ActionFunctionArgs) {
     );
 
     return json(
-      {error: null, newCustomer},
+      { error: null, newCustomer },
       {
         status: 302,
         headers: {
@@ -97,9 +100,9 @@ export async function action({request, context}: ActionFunctionArgs) {
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return json({error: error.message}, {status: 400});
+      return json({ error: error.message }, { status: 400 });
     }
-    return json({error}, {status: 400});
+    return json({ error }, { status: 400 });
   }
 }
 

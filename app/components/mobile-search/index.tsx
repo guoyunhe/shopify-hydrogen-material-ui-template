@@ -1,7 +1,7 @@
-import {ArrowBack as ArrowBackIcon} from '@mui/icons-material';
-import {IconButton, Input, Toolbar} from '@mui/material';
-import {useNavigate} from '@remix-run/react';
-import {useState} from 'react';
+import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
+import { IconButton, Input, Toolbar } from '@mui/material';
+import { useNavigate } from '@remix-run/react';
+import { useState } from 'react';
 export interface MobileSearchProps {
   open: boolean;
   onClose: () => void;
@@ -10,7 +10,7 @@ export interface MobileSearchProps {
 /**
  * TODO PredictiveSearchForm and PredictiveSearchResults
  */
-export function MobileSearch({open, onClose}: MobileSearchProps) {
+export function MobileSearch({ open, onClose }: MobileSearchProps) {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
 
@@ -26,12 +26,12 @@ export function MobileSearch({open, onClose}: MobileSearchProps) {
         navigate('/search?q=' + encodeURIComponent(search));
         onClose();
       }}
-      sx={{display: {xs: open ? 'flex' : 'none', md: 'none'}}}
+      sx={{ display: { xs: open ? 'flex' : 'none', md: 'none' } }}
     >
       <IconButton
         color="inherit"
         edge="start"
-        sx={{mr: 1}}
+        sx={{ mr: 1 }}
         onClick={() => onClose()}
       >
         <ArrowBackIcon />

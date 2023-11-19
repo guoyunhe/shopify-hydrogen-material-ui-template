@@ -7,13 +7,13 @@ type SelectedPolicies = keyof Pick<
   'privacyPolicy' | 'shippingPolicy' | 'termsOfService' | 'refundPolicy'
 >;
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.policy.title ?? ''}`}];
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: `Hydrogen | ${data?.policy.title ?? ''}` }];
 };
 
-export async function loader({params, context}: LoaderFunctionArgs) {
+export async function loader({ params, context }: LoaderFunctionArgs) {
   if (!params.handle) {
-    throw new Response('No handle was passed in', {status: 404});
+    throw new Response('No handle was passed in', { status: 404 });
   }
 
   const policyName = params.handle.replace(
@@ -35,14 +35,14 @@ export async function loader({params, context}: LoaderFunctionArgs) {
   const policy = data.shop?.[policyName];
 
   if (!policy) {
-    throw new Response('Could not find the policy', {status: 404});
+    throw new Response('Could not find the policy', { status: 404 });
   }
 
-  return json({policy});
+  return json({ policy });
 }
 
 export default function Policy() {
-  const {policy} = useLoaderData<typeof loader>();
+  const { policy } = useLoaderData<typeof loader>();
 
   return (
     <div className="policy">
@@ -53,7 +53,7 @@ export default function Policy() {
       </div>
       <br />
       <h1>{policy.title}</h1>
-      <div dangerouslySetInnerHTML={{__html: policy.body}} />
+      <div dangerouslySetInnerHTML={{ __html: policy.body }} />
     </div>
   );
 }

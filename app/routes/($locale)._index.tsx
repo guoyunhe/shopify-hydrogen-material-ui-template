@@ -1,5 +1,10 @@
 import { defer, type LoaderFunctionArgs } from '@netlify/remix-runtime';
-import { Await, Link, useLoaderData, type MetaFunction } from '@remix-run/react';
+import {
+  Await,
+  Link,
+  useLoaderData,
+  type MetaFunction,
+} from '@remix-run/react';
 import { Image, Money } from '@shopify/hydrogen';
 import { Suspense } from 'react';
 import type {
@@ -8,16 +13,16 @@ import type {
 } from 'storefrontapi.generated';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{ title: 'Hydrogen | Home' }];
 };
 
-export async function loader({context}: LoaderFunctionArgs) {
-  const {storefront} = context;
-  const {collections} = await storefront.query(FEATURED_COLLECTION_QUERY);
+export async function loader({ context }: LoaderFunctionArgs) {
+  const { storefront } = context;
+  const { collections } = await storefront.query(FEATURED_COLLECTION_QUERY);
   const featuredCollection = collections.nodes[0];
   const recommendedProducts = storefront.query(RECOMMENDED_PRODUCTS_QUERY);
 
-  return defer({featuredCollection, recommendedProducts});
+  return defer({ featuredCollection, recommendedProducts });
 }
 
 export default function Homepage() {
@@ -62,7 +67,7 @@ function RecommendedProducts({
       <h2>Recommended Products</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
-          {({products}) => (
+          {({ products }) => (
             <div className="recommended-products-grid">
               {products.nodes.map((product) => (
                 <Link

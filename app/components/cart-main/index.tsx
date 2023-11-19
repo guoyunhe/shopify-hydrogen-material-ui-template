@@ -1,14 +1,14 @@
-import {CartForm, Money} from '@shopify/hydrogen';
-import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import {CartEmpty} from '../cart-empty';
-import {CartLine} from '../cart-line';
+import { CartForm, Money } from '@shopify/hydrogen';
+import type { CartApiQueryFragment } from 'storefrontapi.generated';
+import { CartEmpty } from '../cart-empty';
+import { CartLine } from '../cart-line';
 
 export interface CartMainProps {
   cart: CartApiQueryFragment | null;
   layout: 'page' | 'aside';
 }
 
-export function CartMain({layout, cart}: CartMainProps) {
+export function CartMain({ layout, cart }: CartMainProps) {
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
   const withDiscount =
     cart &&
@@ -23,7 +23,7 @@ export function CartMain({layout, cart}: CartMainProps) {
   );
 }
 
-function CartDetails({layout, cart}: CartMainProps) {
+function CartDetails({ layout, cart }: CartMainProps) {
   const cartHasItems = !!cart && cart.totalQuantity > 0;
 
   return (
@@ -58,7 +58,7 @@ function CartLines({
   );
 }
 
-function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
+function CartCheckoutActions({ checkoutUrl }: { checkoutUrl: string }) {
   if (!checkoutUrl) return null;
 
   return (
@@ -109,7 +109,7 @@ function CartDiscounts({
   const codes: string[] =
     discountCodes
       ?.filter((discount) => discount.applicable)
-      ?.map(({code}) => code) || [];
+      ?.map(({ code }) => code) || [];
 
   return (
     <div>

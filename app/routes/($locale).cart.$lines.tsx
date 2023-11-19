@@ -18,9 +18,9 @@ import { redirect, type LoaderFunctionArgs } from '@netlify/remix-runtime';
  *
  * ```
  */
-export async function loader({request, context, params}: LoaderFunctionArgs) {
-  const {cart} = context;
-  const {lines} = params;
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
+  const { cart } = context;
+  const { lines } = params;
   if (!lines) return redirect('/cart');
   const linesMap = lines.split(',').map((line) => {
     const lineDetails = line.split(':');
@@ -58,7 +58,7 @@ export async function loader({request, context, params}: LoaderFunctionArgs) {
 
   // redirect to checkout
   if (cartResult.checkoutUrl) {
-    return redirect(cartResult.checkoutUrl, {headers});
+    return redirect(cartResult.checkoutUrl, { headers });
   } else {
     throw new Error('No checkout URL found');
   }
