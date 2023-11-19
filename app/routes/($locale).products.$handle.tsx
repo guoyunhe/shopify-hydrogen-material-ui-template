@@ -246,9 +246,6 @@ function ProductForm({
       <br />
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          window.dispatchEvent(new Event('cart-open'));
-        }}
         lines={
           selectedVariant
             ? [
@@ -300,13 +297,11 @@ function AddToCartButton({
   children,
   disabled,
   lines,
-  onClick,
 }: {
   analytics?: unknown;
   children: React.ReactNode;
   disabled?: boolean;
   lines: CartLineInput[];
-  onClick?: () => void;
 }) {
   return (
     <CartForm
@@ -326,9 +321,10 @@ function AddToCartButton({
             color="primary"
             size="large"
             type="submit"
-            onClick={onClick}
             disabled={disabled}
-            loading={fetcher.state === 'submitting'}
+            loading={
+              fetcher.state === 'submitting' || fetcher.state === 'loading'
+            }
             startIcon={<AddShoppingCart />}
           >
             {children}
