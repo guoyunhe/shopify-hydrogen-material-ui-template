@@ -17,6 +17,8 @@ import type {
   ProductVariantsQuery,
 } from 'storefrontapi.generated';
 
+import { AddShoppingCart } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
   CartForm,
   Image,
@@ -319,13 +321,18 @@ function AddToCartButton({
             type="hidden"
             value={JSON.stringify(analytics)}
           />
-          <button
+          <LoadingButton
+            variant="contained"
+            color="primary"
+            size="large"
             type="submit"
             onClick={onClick}
-            disabled={disabled ?? fetcher.state !== 'idle'}
+            disabled={disabled}
+            loading={fetcher.state === 'submitting'}
+            startIcon={<AddShoppingCart />}
           >
             {children}
-          </button>
+          </LoadingButton>
         </>
       )}
     </CartForm>
