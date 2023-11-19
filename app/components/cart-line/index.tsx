@@ -1,3 +1,9 @@
+import {
+  Add as AddIcon,
+  Delete as DeleteIcon,
+  Remove as RemoveIcon,
+} from '@mui/icons-material';
+import { Box, IconButton, Typography } from '@mui/material';
 import { Link } from '@remix-run/react';
 import { CartForm, Image, Money } from '@shopify/hydrogen';
 import type { CartLineUpdateInput } from '@shopify/hydrogen/storefront-api-types';
@@ -59,7 +65,9 @@ function CartLineRemoveButton({ lineIds }: { lineIds: string[] }) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{ lineIds }}
     >
-      <button type="submit">Remove</button>
+      <IconButton color="error" type="submit">
+        <DeleteIcon />
+      </IconButton>
     </CartForm>
   );
 }
@@ -71,31 +79,28 @@ function CartLineQuantity({ line }: { line: CartLine }) {
   const nextQuantity = Number((quantity + 1).toFixed(0));
 
   return (
-    <div className="cart-line-quantiy">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
-      <CartLineUpdateButton lines={[{ id: lineId, quantity: prevQuantity }]}>
-        <button
-          aria-label="Decrease quantity"
-          disabled={quantity <= 1}
-          name="decrease-quantity"
-          value={prevQuantity}
-        >
-          <span>&#8722; </span>
-        </button>
-      </CartLineUpdateButton>
-      &nbsp;
+    <Box
+      className="cart-line-quantiy"
+      sx={{ display: 'flex', alignItems: 'center' }}
+    >
+      <Typography>Quantity:</Typography>
       <CartLineUpdateButton lines={[{ id: lineId, quantity: nextQuantity }]}>
-        <button
-          aria-label="Increase quantity"
-          name="increase-quantity"
-          value={nextQuantity}
-        >
-          <span>&#43;</span>
-        </button>
+        <IconButton aria-label="Increase quantity" type="submit">
+          <AddIcon />
+        </IconButton>
       </CartLineUpdateButton>
-      &nbsp;
+      {quantity}
+      <CartLineUpdateButton lines={[{ id: lineId, quantity: prevQuantity }]}>
+        <IconButton
+          aria-label="Decrease quantity"
+          type="submit"
+          disabled={quantity <= 1}
+        >
+          <RemoveIcon />
+        </IconButton>
+      </CartLineUpdateButton>
       <CartLineRemoveButton lineIds={[lineId]} />
-    </div>
+    </Box>
   );
 }
 
