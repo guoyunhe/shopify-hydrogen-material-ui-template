@@ -1,7 +1,10 @@
+import { EmotionCache, ThemeProvider, withEmotionCache } from '@emotion/react';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { CssBaseline } from '@mui/material';
+import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 import {
   defer,
   type LoaderFunctionArgs,
@@ -24,8 +27,10 @@ import { useNonce } from '@shopify/hydrogen';
 import type { CustomerAccessToken } from '@shopify/hydrogen/storefront-api-types';
 import { Layout } from '~/layouts/app';
 import favicon from '../public/favicon.svg';
+import { useClientStyle } from './ClientStyleContext';
 import appStyles from './styles/app.css';
 import resetStyles from './styles/reset.css';
+import theme from './theme';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -111,9 +116,26 @@ export async function loader({ context }: LoaderFunctionArgs) {
   );
 }
 
-export default function App() {
+function App({}, emotionCache: EmotionCache) {
   const nonce = useNonce();
   const data = useLoaderData<typeof loader>();
+
+  const clientStyleData = useClientStyle();
+  // Only executed on client
+  useEnhancedEffect(() => {
+    // re-link sheet container
+    emotionCache.sheet.container = document.head;
+    // re-inject tags
+    const tags = emotionCache.sheet.tags;
+    emotionCache.sheet.flush();
+    tags.forEach((tag) => {
+      // eslint-disable-next-line no-underscore-dangle
+      (emotionCache.sheet as any)._insertTag(tag);
+    });
+    // reset cache to reapply global styles
+    clientStyleData.reset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <html lang="en">
@@ -124,9 +146,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Layout {...data}>
-          <Outlet />
-        </Layout>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Layout {...data}>
+            <Outlet />
+          </Layout>
+        </ThemeProvider>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
@@ -134,6 +159,8 @@ export default function App() {
     </html>
   );
 }
+
+export default withEmotionCache(App);
 
 export function ErrorBoundary() {
   const error = useRouteError();

@@ -17,3 +17,7 @@ npm run dev
 ```bash
 npm run build
 ```
+
+## References
+
+- [Material UI Remix Example](https://github.com/mui/material-ui/blob/master/examples/material-ui-remix-ts/), show how to setup server side rendering with emotion
