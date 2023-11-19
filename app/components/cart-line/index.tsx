@@ -3,8 +3,14 @@ import {
   Delete as DeleteIcon,
   Remove as RemoveIcon,
 } from '@mui/icons-material';
-import { Box, IconButton, ListItem, Typography } from '@mui/material';
-import { Link } from '@remix-run/react';
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  ListItem,
+  Typography,
+} from '@mui/material';
+import { FetcherWithComponents, Link } from '@remix-run/react';
 import { CartForm, Image, Money } from '@shopify/hydrogen';
 import type { CartLineUpdateInput } from '@shopify/hydrogen/storefront-api-types';
 import type { CartApiQueryFragment } from 'storefrontapi.generated';
@@ -71,19 +77,14 @@ function CartLineQuantity({ line }: { line: CartLine }) {
     >
       <Typography>Quantity:</Typography>
       <CartLineUpdateButton lines={[{ id: lineId, quantity: nextQuantity }]}>
-        <IconButton aria-label="Increase quantity" type="submit">
-          <AddIcon />
-        </IconButton>
+        <AddIcon />
       </CartLineUpdateButton>
       {quantity}
-      <CartLineUpdateButton lines={[{ id: lineId, quantity: prevQuantity }]}>
-        <IconButton
-          aria-label="Decrease quantity"
-          type="submit"
-          disabled={quantity <= 1}
-        >
-          <RemoveIcon />
-        </IconButton>
+      <CartLineUpdateButton
+        lines={[{ id: lineId, quantity: prevQuantity }]}
+        disabled={quantity <= 1}
+      >
+        <RemoveIcon />
       </CartLineUpdateButton>
       <CartLineRemoveButton lineIds={[lineId]} />
     </Box>
@@ -124,9 +125,21 @@ function CartLineRemoveButton({ lineIds }: { lineIds: string[] }) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{ lineIds }}
     >
-      <IconButton color="error" type="submit">
-        <DeleteIcon />
-      </IconButton>
+      {(fetcher: FetcherWithComponents<any>) => (
+        <IconButton
+          color="error"
+          type="submit"
+          disabled={
+            fetcher.state === 'submitting' || fetcher.state === 'loading'
+          }
+        >
+          {fetcher.state === 'submitting' || fetcher.state === 'loading' ? (
+            <CircularProgress size={24} />
+          ) : (
+            <DeleteIcon />
+          )}
+        </IconButton>
+      )}
     </CartForm>
   );
 }
@@ -134,9 +147,11 @@ function CartLineRemoveButton({ lineIds }: { lineIds: string[] }) {
 function CartLineUpdateButton({
   children,
   lines,
+  disabled,
 }: {
   children: React.ReactNode;
   lines: CartLineUpdateInput[];
+  disabled?: boolean;
 }) {
   return (
     <CartForm
@@ -144,7 +159,19 @@ function CartLineUpdateButton({
       action={CartForm.ACTIONS.LinesUpdate}
       inputs={{ lines }}
     >
-      {children}
+      {(fetcher: FetcherWithComponents<any>) => (
+        <IconButton
+          color="primary"
+          type="submit"
+          disabled={disabled || fetcher.state === 'submitting'}
+        >
+          {fetcher.state === 'submitting' || fetcher.state === 'loading' ? (
+            <CircularProgress size={24} />
+          ) : (
+            children
+          )}
+        </IconButton>
+      )}
     </CartForm>
   );
 }
