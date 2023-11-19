@@ -10,6 +10,7 @@ export interface CartDrawerProps {
 
 export function CartDrawer({ cart }: CartDrawerProps) {
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const handleOpen = () => {
       setOpen(true);
@@ -24,9 +25,10 @@ export function CartDrawer({ cart }: CartDrawerProps) {
       window.removeEventListener('cart-close', handleClose);
     };
   }, []);
+
   return (
     <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-      <Box sx={{ width: 300 }}>
+      <Box sx={{ width: { xs: 300, md: 400 } }}>
         <Suspense fallback={<CircularProgress />}>
           <Await resolve={cart}>
             {(cart) => {
