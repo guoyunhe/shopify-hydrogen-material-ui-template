@@ -9,3 +9,8 @@ node_modules
 
 # Local Netlify folder
 .netlify
+
+# Package locks
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
