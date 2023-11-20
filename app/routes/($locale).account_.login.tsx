@@ -116,8 +116,8 @@ export default function Login() {
               required
               fullWidth
             />
-            {error && <Alert color="error">{error}</Alert>}
-            <Button type="submit" variant="contained" size="large">
+            {error && <Alert severity="error">{error}</Alert>}
+            <Button type="submit" variant="contained">
               Login
             </Button>
             <Link component={RouterLink} to="/account/recover">

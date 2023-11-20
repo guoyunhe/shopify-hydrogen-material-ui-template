@@ -1,10 +1,21 @@
+import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import {
   json,
   redirect,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
-import { Form, Link, useActionData } from '@remix-run/react';
+import { Form, Link as RouterLink, useActionData } from '@remix-run/react';
 
 type ActionResponse = {
   error?: string;
@@ -51,63 +62,56 @@ export default function Recover() {
   const action = useActionData<ActionResponse>();
 
   return (
-    <div className="account-recover">
-      <div>
+    <Box className="account-recover">
+      <Container maxWidth="xs">
         {action?.resetRequested ? (
           <>
-            <h1>Request Sent.</h1>
+            <Typography variant="h1">Request Sent.</Typography>
             <p>
               If that email address is in our system, you will receive an email
               with instructions about how to reset your password in a few
               minutes.
             </p>
             <br />
-            <Link to="/account/login">Return to Login</Link>
+            <Link component={RouterLink} to="/account/login">
+              Login <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
+            </Link>
           </>
         ) : (
-          <>
-            <h1>Forgot Password.</h1>
-            <p>
-              Enter the email address associated with your account to receive a
-              link to reset your password.
-            </p>
-            <br />
-            <Form method="POST">
-              <fieldset>
-                <label htmlFor="email">Email</label>
-                <input
-                  aria-label="Email address"
-                  autoComplete="email"
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
-                  autoFocus
-                  id="email"
-                  name="email"
-                  placeholder="Email address"
-                  required
-                  type="email"
-                />
-              </fieldset>
-              {action?.error ? (
-                <p>
-                  <mark>
-                    <small>{action.error}</small>
-                  </mark>
-                </p>
-              ) : (
-                <br />
-              )}
-              <button type="submit">Request Reset Link</button>
-            </Form>
-            <div>
-              <br />
+          <Form method="POST">
+            <Stack direction="column" gap={2}>
+              <Typography variant="h1">Forgot Password</Typography>
               <p>
-                <Link to="/account/login">Login →</Link>
+                Enter the email address associated with your account to receive
+                a link to reset your password.
               </p>
-            </div>
-          </>
+              <br />
+              <TextField
+                label="Email"
+                aria-label="Email address"
+                autoComplete="email"
+                autoFocus
+                id="email"
+                name="email"
+                placeholder="Email address"
+                required
+                type="email"
+              />
+
+              {action?.error && <Alert severity="error">{action.error}</Alert>}
+
+              <Button type="submit" variant="contained">
+                Request Reset Link
+              </Button>
+
+              <Link component={RouterLink} to="/account/login">
+                Login <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
+              </Link>
+            </Stack>
+          </Form>
         )}
-      </div>
-    </div>
+      </Container>
+    </Box>
   );
 }
 

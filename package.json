@@ -29,6 +29,7 @@
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "isbot": "^3.7.1",
+    "mui-material-compact": "^1.8.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

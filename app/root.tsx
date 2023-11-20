@@ -2,19 +2,20 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { ThemeProvider } from '@mui/material';
 import {
   defer,
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from '@netlify/remix-runtime';
 import {
+  isRouteErrorResponse,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  isRouteErrorResponse,
   useLoaderData,
   useMatches,
   useRouteError,
@@ -26,6 +27,7 @@ import { Layout } from '~/layouts/app';
 import favicon from '../public/favicon.svg';
 import appStyles from './styles/app.css';
 import resetStyles from './styles/reset.css';
+import theme from './theme';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -124,9 +126,11 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Layout {...data}>
-          <Outlet />
-        </Layout>
+        <ThemeProvider theme={theme}>
+          <Layout {...data}>
+            <Outlet />
+          </Layout>
+        </ThemeProvider>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
         <LiveReload nonce={nonce} />
