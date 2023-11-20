@@ -1,10 +1,21 @@
+import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import {
   json,
   redirect,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
-import { Form, Link, useActionData } from '@remix-run/react';
+import { Form, Link as RouterLink, useActionData } from '@remix-run/react';
 import type { CustomerCreateMutation } from 'storefrontapi.generated';
 
 type ActionResponse = {
@@ -110,61 +121,53 @@ export default function Register() {
   const data = useActionData<ActionResponse>();
   const error = data?.error || null;
   return (
-    <div className="login">
-      <h1>Register.</h1>
-      <Form method="POST">
-        <fieldset>
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="Email address"
-            aria-label="Email address"
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Password"
-            aria-label="Password"
-            minLength={8}
-            required
-          />
-          <label htmlFor="passwordConfirm">Re-enter password</label>
-          <input
-            id="passwordConfirm"
-            name="passwordConfirm"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Re-enter password"
-            aria-label="Re-enter password"
-            minLength={8}
-            required
-          />
-        </fieldset>
-        {error ? (
-          <p>
-            <mark>
-              <small>{error}</small>
-            </mark>
-          </p>
-        ) : (
-          <br />
-        )}
-        <button type="submit">Register</button>
-      </Form>
-      <br />
-      <p>
-        <Link to="/account/login">Login →</Link>
-      </p>
-    </div>
+    <Box className="login">
+      <Container maxWidth="xs">
+        <Form method="POST">
+          <Stack direction="column" gap={2}>
+            <Typography variant="h1">Register</Typography>
+            <TextField
+              id="email"
+              label="Email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              placeholder="Email address"
+              aria-label="Email address"
+              autoFocus
+            />
+            <TextField
+              id="password"
+              label="Password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="Password"
+              aria-label="Password"
+              required
+            />
+            <TextField
+              id="passwordConfirm"
+              label="Confirm password"
+              name="passwordConfirm"
+              type="password"
+              autoComplete="current-password"
+              placeholder="Re-enter password"
+              aria-label="Re-enter password"
+              required
+            />
+            {error && <Alert color="error">{error}</Alert>}
+            <Button type="submit" variant="contained" size="large">
+              Register
+            </Button>
+            <Link component={RouterLink} to="/account/login">
+              Login <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
+            </Link>
+          </Stack>
+        </Form>
+      </Container>
+    </Box>
   );
 }
 
