@@ -27,12 +27,14 @@ export function Layout({
   isLoggedIn,
 }: LayoutProps) {
   return (
-    <Box>
+    <Box minHeight="100vh" display="flex" flexDirection="column">
       <CssBaseline />
       <CartDrawer cart={cart} />
       <MobileMenu menu={header.menu} shop={header.shop} />
       <Navbar header={header} cart={cart} isLoggedIn={isLoggedIn} />
-      <main>{children}</main>
+      <Box component="main" flex="1 1 auto">
+        {children}
+      </Box>
       <Suspense>
         <Await resolve={footer}>
           {(footer) => <Footer menu={footer.menu} shop={header.shop} />}

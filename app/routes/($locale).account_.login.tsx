@@ -1,10 +1,26 @@
+import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import {
   json,
   redirect,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
-import { Form, Link, useActionData, type MetaFunction } from '@remix-run/react';
+import {
+  Form,
+  Link as RouterLink,
+  useActionData,
+  type MetaFunction,
+} from '@remix-run/react';
 
 type ActionResponse = {
   error: string | null;
@@ -72,55 +88,49 @@ export default function Login() {
   const error = data?.error || null;
 
   return (
-    <div className="login">
-      <h1>Sign in.</h1>
-      <Form method="POST">
-        <fieldset>
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="Email address"
-            aria-label="Email address"
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Password"
-            aria-label="Password"
-            minLength={8}
-            required
-          />
-        </fieldset>
-        {error ? (
-          <p>
-            <mark>
-              <small>{error}</small>
-            </mark>
-          </p>
-        ) : (
-          <br />
-        )}
-        <button type="submit">Sign in</button>
-      </Form>
-      <br />
-      <div>
-        <p>
-          <Link to="/account/recover">Forgot password →</Link>
-        </p>
-        <p>
-          <Link to="/account/register">Register →</Link>
-        </p>
-      </div>
-    </div>
+    <Box className="login">
+      <Container maxWidth="xs">
+        <Form method="POST">
+          <Stack direction="column" gap={2}>
+            <Typography variant="h1">Login</Typography>
+            <TextField
+              id="email"
+              label="Email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              placeholder="Email address"
+              aria-label="Email address"
+              autoFocus
+              fullWidth
+            />
+            <TextField
+              id="password"
+              label="Password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="Password"
+              aria-label="Password"
+              required
+              fullWidth
+            />
+            {error && <Alert color="error">{error}</Alert>}
+            <Button type="submit" variant="contained" size="large">
+              Login
+            </Button>
+            <Link component={RouterLink} to="/account/recover">
+              Forgot password{' '}
+              <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
+            </Link>
+            <Link component={RouterLink} to="/account/register">
+              Register <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
+            </Link>
+          </Stack>
+        </Form>
+      </Container>
+    </Box>
   );
 }
 
