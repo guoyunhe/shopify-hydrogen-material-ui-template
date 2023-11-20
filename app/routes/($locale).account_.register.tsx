@@ -157,8 +157,8 @@ export default function Register() {
               aria-label="Re-enter password"
               required
             />
-            {error && <Alert color="error">{error}</Alert>}
-            <Button type="submit" variant="contained" size="large">
+            {error && <Alert severity="error">{error}</Alert>}
+            <Button type="submit" variant="contained">
               Register
             </Button>
             <Link component={RouterLink} to="/account/login">
