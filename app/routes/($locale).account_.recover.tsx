@@ -62,7 +62,7 @@ export default function Recover() {
   const { Form, state, data } = useFetcher<ActionResponse>();
 
   return (
-    <Box className="account-recover">
+    <Box className="account-recover" my={4}>
       <Container maxWidth="xs">
         {data?.resetRequested ? (
           <>
