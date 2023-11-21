@@ -86,10 +86,10 @@ export default function Login() {
   const { Form, state, data } = useFetcher<ActionResponse>();
 
   return (
-    <Box className="login">
+    <Box className="login" my={4}>
       <Container maxWidth="xs">
         <Form method="POST">
-          <Stack direction="column" gap={2} py={4}>
+          <Stack direction="column" gap={2}>
             <Typography variant="h1">Login</Typography>
             <TextField
               id="email"

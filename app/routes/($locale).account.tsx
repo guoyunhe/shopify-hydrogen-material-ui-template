@@ -1,9 +1,17 @@
+import { LoadingButton } from '@mui/lab';
+import { Box, Container, Tab, Tabs, Toolbar, Typography } from '@mui/material';
 import {
   json,
   redirect,
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
-import { Form, NavLink, Outlet, useLoaderData } from '@remix-run/react';
+import {
+  NavLink,
+  Outlet,
+  useFetcher,
+  useLoaderData,
+  useLocation,
+} from '@remix-run/react';
 import type { CustomerFragment } from 'storefrontapi.generated';
 
 export function shouldRevalidate() {
@@ -110,52 +118,58 @@ function AccountLayout({
     : 'Account Details';
 
   return (
-    <div className="account">
-      <h1>{heading}</h1>
-      <br />
-      <AccountMenu />
-      {children}
-    </div>
+    <Box className="account" my={4}>
+      <Container maxWidth="md">
+        <Typography variant="h1">{heading}</Typography>
+        <AccountMenu />
+        {children}
+      </Container>
+    </Box>
   );
 }
 
 function AccountMenu() {
-  function isActiveStyle({
-    isActive,
-    isPending,
-  }: {
-    isActive: boolean;
-    isPending: boolean;
-  }) {
-    return {
-      fontWeight: isActive ? 'bold' : undefined,
-      color: isPending ? 'grey' : 'black',
-    };
-  }
+  const match = useLocation();
 
   return (
-    <nav role="navigation">
-      <NavLink to="/account/orders" style={isActiveStyle}>
-        Orders &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/profile" style={isActiveStyle}>
-        &nbsp; Profile &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/addresses" style={isActiveStyle}>
-        &nbsp; Addresses &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
+    <Toolbar disableGutters>
+      <Tabs value={match?.pathname} component="nav" role="navigation">
+        <Tab
+          label="Orders"
+          component={NavLink}
+          to="/account/orders"
+          value="/account/orders"
+        />
+        <Tab
+          label="Profile"
+          component={NavLink}
+          to="/account/profile"
+          value="/account/profile"
+        />
+        <Tab
+          label="Addresses"
+          component={NavLink}
+          to="/account/addresses"
+          value="/account/addresses"
+        />
+      </Tabs>
+      <Box display="flex" flex="1 1 auto" />
       <Logout />
-    </nav>
+    </Toolbar>
   );
 }
 
 function Logout() {
+  const { Form, state } = useFetcher();
   return (
-    <Form className="account-logout" method="POST" action="/account/logout">
-      &nbsp;<button type="submit">Sign out</button>
+    <Form method="POST" action="/account/logout">
+      <LoadingButton
+        variant="outlined"
+        type="submit"
+        loading={state === 'loading' || state === 'submitting'}
+      >
+        Logout
+      </LoadingButton>
     </Form>
   );
 }

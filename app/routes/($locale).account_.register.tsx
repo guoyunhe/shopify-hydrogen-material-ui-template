@@ -121,7 +121,7 @@ export default function Register() {
   const { Form, state, data } = useFetcher<ActionResponse>();
   const error = data?.error || null;
   return (
-    <Box className="login">
+    <Box className="login" my={4}>
       <Container maxWidth="xs">
         <Form method="POST">
           <Stack direction="column" gap={2}>
