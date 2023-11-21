@@ -1,8 +1,8 @@
 import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
   Alert,
   Box,
-  Button,
   Container,
   Link,
   Stack,
@@ -15,7 +15,7 @@ import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
-import { Form, Link as RouterLink, useActionData } from '@remix-run/react';
+import { Link as RouterLink, useFetcher } from '@remix-run/react';
 import type { CustomerCreateMutation } from 'storefrontapi.generated';
 
 type ActionResponse = {
@@ -118,7 +118,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 }
 
 export default function Register() {
-  const data = useActionData<ActionResponse>();
+  const { Form, state, data } = useFetcher<ActionResponse>();
   const error = data?.error || null;
   return (
     <Box className="login">
@@ -158,9 +158,13 @@ export default function Register() {
               required
             />
             {error && <Alert severity="error">{error}</Alert>}
-            <Button type="submit" variant="contained">
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={state === 'submitting' || state === 'loading'}
+            >
               Register
-            </Button>
+            </LoadingButton>
             <Link component={RouterLink} to="/account/login">
               Login <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
             </Link>

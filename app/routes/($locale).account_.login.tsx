@@ -1,8 +1,8 @@
 import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
   Alert,
   Box,
-  Button,
   Container,
   Link,
   Stack,
@@ -16,9 +16,8 @@ import {
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
 import {
-  Form,
   Link as RouterLink,
-  useActionData,
+  useFetcher,
   type MetaFunction,
 } from '@remix-run/react';
 
@@ -84,14 +83,13 @@ export async function action({ request, context }: ActionFunctionArgs) {
 }
 
 export default function Login() {
-  const data = useActionData<ActionResponse>();
-  const error = data?.error || null;
+  const { Form, state, data } = useFetcher<ActionResponse>();
 
   return (
     <Box className="login">
       <Container maxWidth="xs">
         <Form method="POST">
-          <Stack direction="column" gap={2}>
+          <Stack direction="column" gap={2} py={4}>
             <Typography variant="h1">Login</Typography>
             <TextField
               id="email"
@@ -116,10 +114,14 @@ export default function Login() {
               required
               fullWidth
             />
-            {error && <Alert severity="error">{error}</Alert>}
-            <Button type="submit" variant="contained">
+            {data?.error && <Alert severity="error">{data.error}</Alert>}
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={state === 'submitting' || state === 'loading'}
+            >
               Login
-            </Button>
+            </LoadingButton>
             <Link component={RouterLink} to="/account/recover">
               Forgot password{' '}
               <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
