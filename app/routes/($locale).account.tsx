@@ -97,8 +97,6 @@ export default function Acccount() {
 
   return (
     <AccountLayout customer={customer as CustomerFragment}>
-      <br />
-      <br />
       <Outlet context={{ customer }} />
     </AccountLayout>
   );
