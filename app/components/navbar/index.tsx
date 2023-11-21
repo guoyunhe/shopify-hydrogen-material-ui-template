@@ -3,14 +3,7 @@ import {
   Menu as MenuIcon,
   Search as SearchIcon,
 } from '@mui/icons-material';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import { NavLink } from '@remix-run/react';
 import { useState } from 'react';
 import type {
@@ -60,6 +53,7 @@ export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
           prefetch="intent"
           to="/"
           end
+          mr={2}
         >
           {shop.name}
         </Typography>
@@ -87,7 +81,7 @@ export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
           prefetch="intent"
           to="/account"
         >
-          {isLoggedIn ? <Avatar /> : <AccountCircleIcon />}
+          <AccountCircleIcon />
         </IconButton>
       </Toolbar>
       <MobileSearch
