@@ -6,8 +6,8 @@
     "build": "remix build",
     "codegen": "shopify hydrogen codegen",
     "dev": "remix dev --manual -c \"netlify dev\"",
-    "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx .",
     "format": "prettier --write app",
+    "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx .",
     "preview": "netlify serve",
     "typecheck": "tsc --noEmit"
   },

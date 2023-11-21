@@ -1,8 +1,8 @@
 import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
   Alert,
   Box,
-  Button,
   Container,
   Link,
   Stack,
@@ -15,7 +15,7 @@ import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
-import { Form, Link as RouterLink, useActionData } from '@remix-run/react';
+import { Link as RouterLink, useFetcher } from '@remix-run/react';
 
 type ActionResponse = {
   error?: string;
@@ -59,12 +59,12 @@ export async function action({ request, context }: ActionFunctionArgs) {
 }
 
 export default function Recover() {
-  const action = useActionData<ActionResponse>();
+  const { Form, state, data } = useFetcher<ActionResponse>();
 
   return (
     <Box className="account-recover">
       <Container maxWidth="xs">
-        {action?.resetRequested ? (
+        {data?.resetRequested ? (
           <>
             <Typography variant="h1">Request Sent.</Typography>
             <p>
@@ -98,11 +98,15 @@ export default function Recover() {
                 type="email"
               />
 
-              {action?.error && <Alert severity="error">{action.error}</Alert>}
+              {data?.error && <Alert severity="error">{data.error}</Alert>}
 
-              <Button type="submit" variant="contained">
+              <LoadingButton
+                type="submit"
+                variant="contained"
+                loading={state === 'submitting' || state === 'loading'}
+              >
                 Request Reset Link
-              </Button>
+              </LoadingButton>
 
               <Link component={RouterLink} to="/account/login">
                 Login <ArrowForwardIcon fontSize="inherit" sx={{ mb: -0.3 }} />
