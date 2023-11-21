@@ -1,3 +1,5 @@
+import { LoadingButton } from '@mui/lab';
+import { Alert, Box, Stack, TextField, Typography } from '@mui/material';
 import {
   json,
   redirect,
@@ -114,54 +116,57 @@ export default function AccountProfile() {
   const customer = action?.customer ?? account?.customer;
 
   return (
-    <div className="account-profile">
-      <h2>My profile</h2>
-      <br />
+    <Box>
       <Form method="PUT">
-        <legend>Personal information</legend>
-        <fieldset>
-          <label htmlFor="firstName">First name</label>
-          <input
+        <Typography variant="h3" mb={3}>
+          Personal information
+        </Typography>
+        <Stack direction="column" gap={2}>
+          <TextField
             id="firstName"
             name="firstName"
             type="text"
             autoComplete="given-name"
-            placeholder="First name"
+            label="First name"
             aria-label="First name"
             defaultValue={customer.firstName ?? ''}
-            minLength={2}
           />
-          <label htmlFor="lastName">Last name</label>
-          <input
+          <TextField
             id="lastName"
             name="lastName"
             type="text"
             autoComplete="family-name"
-            placeholder="Last name"
+            label="Last name"
             aria-label="Last name"
             defaultValue={customer.lastName ?? ''}
-            minLength={2}
           />
-          <label htmlFor="phone">Mobile</label>
-          <input
+          <TextField
             id="phone"
             name="phone"
             type="tel"
             autoComplete="tel"
-            placeholder="Mobile"
+            label="Mobile"
             aria-label="Mobile"
             defaultValue={customer.phone ?? ''}
           />
-          <label htmlFor="email">Email address</label>
-          <input
+          <TextField
             id="email"
             name="email"
             type="email"
             autoComplete="email"
             required
-            placeholder="Email address"
-            aria-label="Email address"
+            label="Email"
+            aria-label="Email"
             defaultValue={customer.email ?? ''}
+          />
+          <TextField
+            id="currentPassword"
+            name="currentPassword"
+            type="password"
+            autoComplete="current-password"
+            label="Current password"
+            aria-label="Current password"
+            required
           />
           <div className="account-profile-marketing">
             <input
@@ -176,56 +181,52 @@ export default function AccountProfile() {
               &nbsp; Subscribed to marketing communications
             </label>
           </div>
-        </fieldset>
-        <br />
-        <legend>Change password (optional)</legend>
-        <fieldset>
-          <label htmlFor="currentPassword">Current password</label>
-          <input
-            id="currentPassword"
+          <LoadingButton
+            variant="contained"
+            type="submit"
+            loading={state !== 'idle'}
+          >
+            Update
+          </LoadingButton>
+        </Stack>
+      </Form>
+      <Box mb={4} />
+      <Form method="PUT">
+        <Typography variant="h3" mb={3}>
+          Change password
+        </Typography>
+        <Stack direction="column" gap={2}>
+          <TextField
             name="currentPassword"
             type="password"
             autoComplete="current-password"
-            placeholder="Current password"
-            aria-label="Current password"
-            minLength={8}
+            label="Current password"
+            required
           />
 
-          <label htmlFor="newPassword">New password</label>
-          <input
-            id="newPassword"
-            name="newPassword"
-            type="password"
-            placeholder="New password"
-            aria-label="New password"
-            minLength={8}
-          />
+          <TextField name="newPassword" type="password" label="New password" />
 
-          <label htmlFor="newPasswordConfirm">New password (confirm)</label>
-          <input
+          <TextField
             id="newPasswordConfirm"
             name="newPasswordConfirm"
             type="password"
-            placeholder="New password (confirm)"
+            label="New password (confirm)"
             aria-label="New password confirm"
-            minLength={8}
           />
           <small>Passwords must be at least 8 characters.</small>
-        </fieldset>
-        {action?.error ? (
-          <p>
-            <mark>
-              <small>{action.error}</small>
-            </mark>
-          </p>
-        ) : (
-          <br />
-        )}
-        <button type="submit" disabled={state !== 'idle'}>
-          {state !== 'idle' ? 'Updating' : 'Update'}
-        </button>
+          {typeof action?.error === 'string' && (
+            <Alert severity="error">{action.error}</Alert>
+          )}
+          <LoadingButton
+            variant="contained"
+            type="submit"
+            loading={state !== 'idle'}
+          >
+            Update
+          </LoadingButton>
+        </Stack>
       </Form>
-    </div>
+    </Box>
   );
 }
 
