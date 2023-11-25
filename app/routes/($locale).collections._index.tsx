@@ -1,7 +1,11 @@
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
-import { Link, useLoaderData } from '@remix-run/react';
-import { Image, Pagination, getPaginationVariables } from '@shopify/hydrogen';
+import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
+import { getPaginationVariables, Image, Pagination } from '@shopify/hydrogen';
 import type { CollectionFragment } from 'storefrontapi.generated';
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: `Hydrogen | Collections` }];
+};
 
 export async function loader({ context, request }: LoaderFunctionArgs) {
   const paginationVariables = getPaginationVariables(request, {
