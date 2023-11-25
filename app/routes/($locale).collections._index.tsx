@@ -1,6 +1,18 @@
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardHeader,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+} from '@mui/material';
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
-import { getPaginationVariables, Image, Pagination } from '@shopify/hydrogen';
+import { Image, Pagination, getPaginationVariables } from '@shopify/hydrogen';
 import type { CollectionFragment } from 'storefrontapi.generated';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -23,22 +35,38 @@ export default function Collections() {
   const { collections } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collections">
-      <h1>Collections</h1>
-      <Pagination connection={collections}>
-        {({ nodes, isLoading, PreviousLink, NextLink }) => (
-          <div>
-            <PreviousLink>
-              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-            </PreviousLink>
-            <CollectionsGrid collections={nodes} />
-            <NextLink>
-              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-            </NextLink>
-          </div>
-        )}
-      </Pagination>
-    </div>
+    <Box className="collections">
+      <Container maxWidth="xl">
+        <Typography variant="h1" mt={4} mb={3}>
+          Collections
+        </Typography>
+        <Pagination connection={collections}>
+          {({ nodes, isLoading, PreviousLink, NextLink }) => (
+            <div>
+              <PreviousLink>
+                <LoadingButton
+                  loading={isLoading}
+                  startIcon={<ArrowUpward />}
+                  sx={{ my: 3 }}
+                >
+                  Load previous
+                </LoadingButton>
+              </PreviousLink>
+              <CollectionsGrid collections={nodes} />
+              <NextLink>
+                <LoadingButton
+                  loading={isLoading}
+                  startIcon={<ArrowDownward />}
+                  sx={{ my: 3 }}
+                >
+                  Load more
+                </LoadingButton>
+              </NextLink>
+            </div>
+          )}
+        </Pagination>
+      </Container>
+    </Box>
   );
 }
 
@@ -48,7 +76,7 @@ function CollectionsGrid({
   collections: CollectionFragment[];
 }) {
   return (
-    <div className="collections-grid">
+    <Grid container spacing={3}>
       {collections.map((collection, index) => (
         <CollectionItem
           key={collection.id}
@@ -56,7 +84,7 @@ function CollectionsGrid({
           index={index}
         />
       ))}
-    </div>
+    </Grid>
   );
 }
 
@@ -68,22 +96,27 @@ function CollectionItem({
   index: number;
 }) {
   return (
-    <Link
-      className="collection-item"
-      key={collection.id}
-      to={`/collections/${collection.handle}`}
-      prefetch="intent"
-    >
-      {collection?.image && (
-        <Image
-          alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
-          data={collection.image}
-          loading={index < 3 ? 'eager' : undefined}
-        />
-      )}
-      <h5>{collection.title}</h5>
-    </Link>
+    <Grid key={collection.id} item xs={12} sm={6} md={3}>
+      <Card variant="outlined">
+        <CardActionArea
+          component={Link}
+          to={`/collections/${collection.handle}`}
+          prefetch="intent"
+        >
+          {collection?.image && (
+            <CardMedia
+              component={Image}
+              alt={collection.image.altText || collection.title}
+              aspectRatio="1/1"
+              data={collection.image}
+              loading={index < 3 ? 'eager' : undefined}
+              style={{ width: '100%', height: 'auto' }}
+            />
+          )}
+          <CardHeader title={collection.title} />
+        </CardActionArea>
+      </Card>
+    </Grid>
   );
 }
 
