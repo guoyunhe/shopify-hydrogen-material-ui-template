@@ -1,6 +1,7 @@
+import { Box, Container, Typography } from '@mui/material';
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
-import { getPaginationVariables, Pagination } from '@shopify/hydrogen';
+import { Pagination, getPaginationVariables } from '@shopify/hydrogen';
 
 export const meta: MetaFunction = () => {
   return [{ title: `Hydrogen | Blogs` }];
@@ -27,37 +28,41 @@ export default function Blogs() {
   const { blogs } = useLoaderData<typeof loader>();
 
   return (
-    <div className="blogs">
-      <h1>Blogs</h1>
-      <div className="blogs-grid">
-        <Pagination connection={blogs}>
-          {({ nodes, isLoading, PreviousLink, NextLink }) => {
-            return (
-              <>
-                <PreviousLink>
-                  {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-                </PreviousLink>
-                {nodes.map((blog) => {
-                  return (
-                    <Link
-                      className="blog"
-                      key={blog.handle}
-                      prefetch="intent"
-                      to={`/blogs/${blog.handle}`}
-                    >
-                      <h2>{blog.title}</h2>
-                    </Link>
-                  );
-                })}
-                <NextLink>
-                  {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-                </NextLink>
-              </>
-            );
-          }}
-        </Pagination>
-      </div>
-    </div>
+    <Box>
+      <Container maxWidth="md">
+        <Typography variant="h1" mt={4} mb={3}>
+          Blogs
+        </Typography>
+        <div className="blogs-grid">
+          <Pagination connection={blogs}>
+            {({ nodes, isLoading, PreviousLink, NextLink }) => {
+              return (
+                <>
+                  <PreviousLink>
+                    {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+                  </PreviousLink>
+                  {nodes.map((blog) => {
+                    return (
+                      <Link
+                        className="blog"
+                        key={blog.handle}
+                        prefetch="intent"
+                        to={`/blogs/${blog.handle}`}
+                      >
+                        <h2>{blog.title}</h2>
+                      </Link>
+                    );
+                  })}
+                  <NextLink>
+                    {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+                  </NextLink>
+                </>
+              );
+            }}
+          </Pagination>
+        </div>
+      </Container>
+    </Box>
   );
 }
 

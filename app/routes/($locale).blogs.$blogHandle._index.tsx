@@ -1,7 +1,18 @@
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Container,
+  Typography,
+} from '@mui/material';
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
-import { getPaginationVariables, Image, Pagination } from '@shopify/hydrogen';
+import { Image, Pagination, getPaginationVariables } from '@shopify/hydrogen';
 import type { ArticleItemFragment } from 'storefrontapi.generated';
+import blogImage1 from '~/images/blog-1.jpg';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [{ title: `Hydrogen | ${data?.blog.title ?? ''} blog` }];
@@ -39,34 +50,38 @@ export default function Blog() {
   const { articles } = blog;
 
   return (
-    <div className="blog">
-      <h1>{blog.title}</h1>
-      <div className="blog-grid">
-        <Pagination connection={articles}>
-          {({ nodes, isLoading, PreviousLink, NextLink }) => {
-            return (
-              <>
-                <PreviousLink>
-                  {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-                </PreviousLink>
-                {nodes.map((article, index) => {
-                  return (
-                    <ArticleItem
-                      article={article}
-                      key={article.id}
-                      loading={index < 2 ? 'eager' : 'lazy'}
-                    />
-                  );
-                })}
-                <NextLink>
-                  {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-                </NextLink>
-              </>
-            );
-          }}
-        </Pagination>
-      </div>
-    </div>
+    <Box>
+      <Container maxWidth="md">
+        <Typography variant="h1" mt={4} mb={3}>
+          {blog.title}
+        </Typography>
+        <Box>
+          <Pagination connection={articles}>
+            {({ nodes, isLoading, PreviousLink, NextLink }) => {
+              return (
+                <>
+                  <PreviousLink>
+                    {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+                  </PreviousLink>
+                  {nodes.map((article, index) => {
+                    return (
+                      <ArticleItem
+                        article={article}
+                        key={article.id}
+                        loading={index < 2 ? 'eager' : 'lazy'}
+                      />
+                    );
+                  })}
+                  <NextLink>
+                    {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+                  </NextLink>
+                </>
+              );
+            }}
+          </Pagination>
+        </Box>
+      </Container>
+    </Box>
   );
 }
 
@@ -83,23 +98,47 @@ function ArticleItem({
     day: 'numeric',
   }).format(new Date(article.publishedAt!));
   return (
-    <div className="blog-article" key={article.id}>
-      <Link to={`/blogs/${article.blog.handle}/${article.handle}`}>
-        {article.image && (
-          <div className="blog-article-image">
-            <Image
-              alt={article.image.altText || article.title}
-              aspectRatio="3/2"
-              data={article.image}
-              loading={loading}
-              sizes="(min-width: 768px) 50vw, 100vw"
-            />
-          </div>
+    <Card key={article.id} variant="outlined" sx={{ my: 3 }}>
+      <CardActionArea
+        component={Link}
+        to={`/blogs/${article.blog.handle}/${article.handle}`}
+        sx={{
+          display: 'flex',
+          flexDirection: {
+            xs: 'column',
+            sm: 'row',
+          },
+        }}
+      >
+        {article.image ? (
+          <CardMedia
+            component={Image}
+            alt={article.image.altText || article.title}
+            aspectRatio="3/2"
+            data={article.image}
+            loading={loading}
+            sizes="(min-width: 768px) 50vw, 100vw"
+          />
+        ) : (
+          <CardMedia
+            component="img"
+            image={blogImage1}
+            sx={{ flex: '1 1 50%' }}
+          />
         )}
-        <h3>{article.title}</h3>
-        <small>{publishedAt}</small>
-      </Link>
-    </div>
+        <Box sx={{ flex: '1 1 50%' }}>
+          <CardHeader title={article.title} subheader={publishedAt} />
+          <CardContent>
+            <Typography>
+              {article.contentHtml
+                ?.replace(/<\/?[^>]+(>|$)/g, '')
+                ?.substring(0, 400)}
+              ...
+            </Typography>
+          </CardContent>
+        </Box>
+      </CardActionArea>
+    </Card>
   );
 }
 

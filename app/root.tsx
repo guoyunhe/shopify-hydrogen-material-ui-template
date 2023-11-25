@@ -26,7 +26,6 @@ import type { CustomerAccessToken } from '@shopify/hydrogen/storefront-api-types
 import { Layout } from '~/layouts/app';
 import favicon from '../public/favicon.svg';
 import appStyles from './styles/app.css';
-import resetStyles from './styles/reset.css';
 import theme from './theme';
 
 /**
@@ -52,7 +51,6 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export function links() {
   return [
-    { rel: 'stylesheet', href: resetStyles },
     { rel: 'stylesheet', href: appStyles },
     {
       rel: 'preconnect',
