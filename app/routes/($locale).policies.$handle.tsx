@@ -1,3 +1,5 @@
+import { ArrowBack } from '@mui/icons-material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import { Link, useLoaderData, type MetaFunction } from '@remix-run/react';
 import { type Shop } from '@shopify/hydrogen/storefront-api-types';
@@ -45,16 +47,22 @@ export default function Policy() {
   const { policy } = useLoaderData<typeof loader>();
 
   return (
-    <div className="policy">
-      <br />
-      <br />
-      <div>
-        <Link to="/policies">← Back to Policies</Link>
-      </div>
-      <br />
-      <h1>{policy.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: policy.body }} />
-    </div>
+    <Box>
+      <Container maxWidth="sm">
+        <Button
+          component={Link}
+          to="/policies"
+          startIcon={<ArrowBack />}
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Back to Policies
+        </Button>
+        <Typography variant="h1" mb={3}>
+          {policy.title}
+        </Typography>
+        <Box dangerouslySetInnerHTML={{ __html: policy.body }} mb={4} />
+      </Container>
+    </Box>
   );
 }
 

@@ -1,3 +1,13 @@
+import { ArrowForward } from '@mui/icons-material';
+import {
+  Box,
+  Container,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import { Link, useLoaderData } from '@remix-run/react';
 
@@ -16,19 +26,32 @@ export default function Policies() {
   const { policies } = useLoaderData<typeof loader>();
 
   return (
-    <div className="policies">
-      <h1>Policies</h1>
-      <div>
-        {policies.map((policy) => {
-          if (!policy) return null;
-          return (
-            <fieldset key={policy.id}>
-              <Link to={`/policies/${policy.handle}`}>{policy.title}</Link>
-            </fieldset>
-          );
-        })}
-      </div>
-    </div>
+    <Box>
+      <Container maxWidth="sm">
+        <Typography variant="h1" mt={4} mb={3}>
+          Policies
+        </Typography>
+        <List disablePadding>
+          {policies.map((policy) => {
+            if (!policy) return null;
+            return (
+              <ListItemButton
+                key={policy.id}
+                divider
+                disableGutters
+                component={Link}
+                to={`/policies/${policy.handle}`}
+              >
+                <ListItemText primary={policy.title} />
+                <ListItemIcon>
+                  <ArrowForward />
+                </ListItemIcon>
+              </ListItemButton>
+            );
+          })}
+        </List>
+      </Container>
+    </Box>
   );
 }
 
