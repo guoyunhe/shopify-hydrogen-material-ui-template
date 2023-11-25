@@ -1,3 +1,4 @@
+import { Box, Container, Typography } from '@mui/material';
 import {
   json,
   redirect,
@@ -44,24 +45,28 @@ export default function Collection() {
   const { collection } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
-      <Pagination connection={collection.products}>
-        {({ nodes, isLoading, PreviousLink, NextLink }) => (
-          <>
-            <PreviousLink>
-              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-            </PreviousLink>
-            <ProductsGrid products={nodes} />
-            <br />
-            <NextLink>
-              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-            </NextLink>
-          </>
-        )}
-      </Pagination>
-    </div>
+    <Box>
+      <Container maxWidth="xl">
+        <Typography variant="h1" mt={4} mb={3}>
+          {collection.title}
+        </Typography>
+        <p className="collection-description">{collection.description}</p>
+        <Pagination connection={collection.products}>
+          {({ nodes, isLoading, PreviousLink, NextLink }) => (
+            <>
+              <PreviousLink>
+                {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+              </PreviousLink>
+              <ProductsGrid products={nodes} />
+              <br />
+              <NextLink>
+                {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+              </NextLink>
+            </>
+          )}
+        </Pagination>
+      </Container>
+    </Box>
   );
 }
 
