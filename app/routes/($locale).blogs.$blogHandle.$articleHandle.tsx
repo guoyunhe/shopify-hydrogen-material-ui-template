@@ -1,3 +1,4 @@
+import { Box, Container, Typography } from '@mui/material';
 import { json, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import { useLoaderData, type MetaFunction } from '@remix-run/react';
 import { Image } from '@shopify/hydrogen';
@@ -37,20 +38,20 @@ export default function Article() {
   }).format(new Date(article.publishedAt));
 
   return (
-    <div className="article">
-      <h1>
-        {title}
-        <span>
-          {publishedDate} &middot; {author?.name}
-        </span>
-      </h1>
+    <Box>
+      <Container maxWidth="md">
+        {image && <Image data={image} sizes="90vw" loading="eager" />}
 
-      {image && <Image data={image} sizes="90vw" loading="eager" />}
-      <div
-        dangerouslySetInnerHTML={{ __html: contentHtml }}
-        className="article"
-      />
-    </div>
+        <Typography variant="h1" mt={4} mb={3}>
+          {title}
+        </Typography>
+        <Typography variant="caption" mb={3}>
+          {publishedDate} &middot; {author?.name}
+        </Typography>
+
+        <Box dangerouslySetInnerHTML={{ __html: contentHtml }} />
+      </Container>
+    </Box>
   );
 }
 
