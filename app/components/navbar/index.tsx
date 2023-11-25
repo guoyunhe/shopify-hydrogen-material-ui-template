@@ -49,6 +49,7 @@ export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
 
         <Typography
           fontSize={20}
+          color="inherit"
           component={NavLink}
           prefetch="intent"
           to="/"
