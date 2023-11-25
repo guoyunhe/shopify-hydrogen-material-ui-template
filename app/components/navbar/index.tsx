@@ -55,6 +55,7 @@ export function Navbar({ header, isLoggedIn, cart }: NavbarProps) {
           to="/"
           end
           mr={2}
+          sx={{ textDecoration: 'none' }}
         >
           {shop.name}
         </Typography>
