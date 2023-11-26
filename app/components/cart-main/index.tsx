@@ -1,4 +1,12 @@
-import { List } from '@mui/material';
+import { ArrowForward } from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  Divider,
+  List,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { CartForm, Money } from '@shopify/hydrogen';
 import type { CartApiQueryFragment } from 'storefrontapi.generated';
 import { CartEmpty } from '../cart-empty';
@@ -31,10 +39,13 @@ function CartDetails({ layout, cart }: CartMainProps) {
     <div className="cart-details">
       <CartLines lines={cart?.lines} layout={layout} />
       {cartHasItems && (
-        <CartSummary cost={cart.cost} layout={layout}>
+        <>
+          <CartSummary cost={cart.cost} />
+          <Divider />
           <CartDiscounts discountCodes={cart.discountCodes} />
+          <Divider />
           <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
-        </CartSummary>
+        </>
       )}
     </div>
   );
@@ -63,42 +74,32 @@ function CartCheckoutActions({ checkoutUrl }: { checkoutUrl: string }) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
-      </a>
-      <br />
-    </div>
+    <Box p={2}>
+      <Button
+        endIcon={<ArrowForward />}
+        variant="contained"
+        component="a"
+        href={checkoutUrl}
+        target="_self"
+      >
+        Continue to Checkout
+      </Button>
+    </Box>
   );
 }
 
-export function CartSummary({
-  cost,
-  layout,
-  children = null,
-}: {
-  children?: React.ReactNode;
-  cost: CartApiQueryFragment['cost'];
-  layout: CartMainProps['layout'];
-}) {
-  const className =
-    layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
-
+export function CartSummary({ cost }: { cost: CartApiQueryFragment['cost'] }) {
   return (
-    <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
-          {cost?.subtotalAmount?.amount ? (
-            <Money data={cost?.subtotalAmount} />
-          ) : (
-            '-'
-          )}
-        </dd>
-      </dl>
-      {children}
-    </div>
+    <Box p={2}>
+      <Typography variant="h4">Totals:</Typography>
+      <Typography color="primary">
+        {cost?.subtotalAmount?.amount ? (
+          <Money data={cost?.subtotalAmount} />
+        ) : (
+          '-'
+        )}
+      </Typography>
+    </Box>
   );
 }
 
@@ -113,7 +114,7 @@ function CartDiscounts({
       ?.map(({ code }) => code) || [];
 
   return (
-    <div>
+    <Box p={2}>
       {/* Have existing discount, display it with a remove option */}
       <dl hidden={!codes.length}>
         <div>
@@ -130,13 +131,20 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
-          &nbsp;
-          <button type="submit">Apply</button>
-        </div>
+        <Box display="flex">
+          <TextField
+            type="text"
+            name="discountCode"
+            label="Discount code"
+            sx={{ mr: 2 }}
+            fullWidth
+          />
+          <Button variant="outlined" type="submit">
+            Apply
+          </Button>
+        </Box>
       </UpdateDiscountForm>
-    </div>
+    </Box>
   );
 }
 
