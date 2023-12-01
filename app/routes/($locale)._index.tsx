@@ -1,3 +1,4 @@
+import { Box, Typography } from '@mui/material';
 import { defer, type LoaderFunctionArgs } from '@netlify/remix-runtime';
 import {
   Await,
@@ -44,15 +45,54 @@ function FeaturedCollection({
   const image = collection?.image;
   return (
     <Link
-      className="featured-collection"
       to={`/collections/${collection.handle}`}
+      style={{
+        color: 'inherit',
+        textDecoration: 'none',
+        position: 'relative',
+        display: 'block',
+      }}
     >
       {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
-        </div>
+        <Image
+          data={image}
+          sizes="100vw"
+          style={{
+            display: 'block',
+            width: '100%',
+            height: 'calc(100vh - 64px)',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+        />
       )}
-      <h1>{collection.title}</h1>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          variant="h1"
+          fontWeight={700}
+          fontSize={{ xs: 48, md: 64, lg: 72 }}
+          color="#fff"
+          bgcolor="rgba(0,0,0,0.2)"
+          px={3}
+          py={1}
+          sx={{
+            transform: 'skew(-15deg)',
+          }}
+        >
+          {collection.title}
+        </Typography>
+      </Box>
     </Link>
   );
 }
